@@ -13,7 +13,6 @@ import (
 )
 
 var (
-	// RouterMap: 存放路由的 name 和 path
 	RouterMap = make(map[string]string, 0)
 	methodMap = make(map[string]string, 0)
 )

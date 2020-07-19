@@ -1,8 +1,8 @@
 package policies
 
 import (
-	statusModel "ginweibo/app/models/status"
-	userModel "ginweibo/app/models/user"
+	statusModel "ginweibo/models/status"
+	userModel "ginweibo/models/user"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"

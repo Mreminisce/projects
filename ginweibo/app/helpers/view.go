@@ -8,17 +8,15 @@ import (
 	"ginweibo/config"
 )
 
-var (
-	// 存储 mix-manifest.json 解析出来的 path map
-	manifests = make(map[string]string)
-)
+// 存储 mix-manifest.json 解析出来的 path map
+var manifests = make(map[string]string)
 
 // 生成项目静态文件地址
 func Static(staticFilePath string) string {
 	return "/" + config.AppConfig.StaticPath + staticFilePath
 }
 
-// 根据 laravel-mix 生成静态文件 path
+// 根据 laravel-mix 的 static/mix-manifest.json 生成静态文件 path
 func Mix(staticFilePath string) string {
 	result := manifests[staticFilePath]
 	if result == "" {

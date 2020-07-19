@@ -2,8 +2,8 @@ package factory
 
 import (
 	"fmt"
-	"ginweibo/app/models"
-	userModel "ginweibo/app/models/user"
+	"ginweibo/models"
+	userModel "ginweibo/models/user"
 	"ginweibo/pkg/utils"
 	"time"
 
@@ -14,11 +14,6 @@ import (
 // 头像假数据
 var (
 	avatars = []string{
-		"https://cdn.learnku.com/uploads/avatars/7850_1481780622.jpeg!/both/380x380",
-		"https://cdn.learnku.com/uploads/avatars/7850_1481780622.jpeg!/both/380x380",
-		"https://cdn.learnku.com/uploads/avatars/7850_1481780622.jpeg!/both/380x380",
-		"https://cdn.learnku.com/uploads/avatars/7850_1481780622.jpeg!/both/380x380",
-		"https://cdn.learnku.com/uploads/avatars/7850_1481780622.jpeg!/both/380x380",
 		"https://cdn.learnku.com/uploads/avatars/7850_1481780622.jpeg!/both/380x380",
 	}
 )

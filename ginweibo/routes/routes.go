@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"ginweibo/app/controllers"
+	"ginweibo/controllers"
 	"ginweibo/middleware"
 
 	"github.com/gin-gonic/gin"

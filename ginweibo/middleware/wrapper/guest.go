@@ -2,7 +2,7 @@ package wrapper
 
 import (
 	"ginweibo/app/auth"
-	"ginweibo/app/controllers"
+	"ginweibo/controllers"
 	"ginweibo/pkg/flash"
 
 	"github.com/gin-gonic/gin"

@@ -1,7 +1,7 @@
 package services
 
 import (
-	userModel "ginweibo/app/models/user"
+	userModel "ginweibo/models/user"
 	viewmodels "ginweibo/app/view_models"
 	"sync"
 )

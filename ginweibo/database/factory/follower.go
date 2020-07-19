@@ -1,8 +1,8 @@
 package factory
 
 import (
-	followerModel "ginweibo/app/models/follower"
-	userModel "ginweibo/app/models/user"
+	followerModel "ginweibo/models/follower"
+	userModel "ginweibo/models/user"
 )
 
 func FollowerTableSeeder(needCleanTable bool) {

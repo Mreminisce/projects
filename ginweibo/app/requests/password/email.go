@@ -1,8 +1,8 @@
 package password
 
 import (
-	passwordResetModel "ginweibo/app/models/password_reset"
-	userModel "ginweibo/app/models/user"
+	passwordResetModel "ginweibo/models/password_reset"
+	userModel "ginweibo/models/user"
 	"ginweibo/app/requests"
 )
 

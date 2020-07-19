@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"ginweibo/app/controllers"
+	"ginweibo/controllers"
 	"ginweibo/config"
 	"ginweibo/pkg/utils"
 	"net/http"

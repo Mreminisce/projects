@@ -2,7 +2,7 @@ package factory
 
 import (
 	"fmt"
-	statusModel "ginweibo/app/models/status"
+	statusModel "ginweibo/models/status"
 
 	"github.com/Pallinder/go-randomdata"
 	"github.com/bluele/factory-go/factory"

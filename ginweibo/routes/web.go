@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"ginweibo/app/controllers/followers"
-	"ginweibo/app/controllers/password"
-	"ginweibo/app/controllers/sessions"
-	staticpage "ginweibo/app/controllers/static_page"
-	"ginweibo/app/controllers/status"
-	"ginweibo/app/controllers/user"
+	"ginweibo/controllers/followers"
+	"ginweibo/controllers/password"
+	"ginweibo/controllers/sessions"
+	staticpage "ginweibo/controllers/static_page"
+	"ginweibo/controllers/status"
+	"ginweibo/controllers/user"
 	"ginweibo/middleware/wrapper"
 	"ginweibo/routes/named"
 

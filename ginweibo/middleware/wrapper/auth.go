@@ -2,8 +2,8 @@ package wrapper
 
 import (
 	"ginweibo/app/auth"
-	"ginweibo/app/controllers"
-	userModel "ginweibo/app/models/user"
+	"ginweibo/controllers"
+	userModel "ginweibo/models/user"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,7 +2,7 @@ package auth
 
 import (
 	"errors"
-	userModel "ginweibo/app/models/user"
+	userModel "ginweibo/models/user"
 	"ginweibo/config"
 
 	"github.com/gin-gonic/gin"
