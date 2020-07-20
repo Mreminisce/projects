@@ -1,35 +1,15 @@
 package middleware
 
 import (
-	"ginweibo/controllers"
 	"ginweibo/config"
+	"ginweibo/controllers"
 	"ginweibo/pkg/utils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func Csrf() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		if config.AppConfig.EnableCsrf {
-			// cookie 中获取 csrf token (如没有则设置)
-			csrfToken := getCsrfTokenFromCookie(c)
-			// POST 并且开启了 csrf
-			if c.Request.Method == http.MethodPost {
-				// params 中获取 csrf token
-				paramCsrfToken := getCsrfTokenFromParamsOrHeader(c)
-				if paramCsrfToken == "" || paramCsrfToken != csrfToken {
-					controllers.Render403(c, "您的 Session 已过期，刷新后再试一次。")
-					c.Abort()
-					return
-				}
-			}
-		}
-		c.Next()
-	}
-}
-
-// 从 cookie 中获取 csrf token
+// cookie 中获取 csrf token，没有则设置
 func getCsrfTokenFromCookie(c *gin.Context) (token string) {
 	keyName := config.AppConfig.CsrfParamName
 	if s, err := c.Request.Cookie(keyName); err == nil {
@@ -56,4 +36,22 @@ func getCsrfTokenFromParamsOrHeader(c *gin.Context) (token string) {
 		token = req.Header.Get(config.AppConfig.CsrfHeaderName)
 	}
 	return token
+}
+
+func Csrf() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if config.AppConfig.EnableCsrf {
+			csrfToken := getCsrfTokenFromCookie(c)
+			// POST 并且开启了 csrf
+			if c.Request.Method == http.MethodPost {
+				paramCsrfToken := getCsrfTokenFromParamsOrHeader(c)
+				if paramCsrfToken == "" || paramCsrfToken != csrfToken {
+					controllers.Render403(c, "您的 Session 已过期，刷新后再试一次。")
+					c.Abort()
+					return
+				}
+			}
+		}
+		c.Next()
+	}
 }

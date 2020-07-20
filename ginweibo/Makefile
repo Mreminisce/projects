@@ -1,4 +1,4 @@
-APP_NAME = "gin_weibo"
+APP_NAME = "ginweibo"
 
 default:
 	go build -o ${APP_NAME}

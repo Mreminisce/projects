@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVER="gin_weibo"
+SERVER="ginweibo"
 BASE_DIR=$PWD
 INTERVAL=2
 

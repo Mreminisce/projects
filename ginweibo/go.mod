@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/Away0x/api_server v0.0.0-20180925062228-fa04897ba0e4
 	github.com/Pallinder/go-randomdata v1.1.0
-	github.com/bluele/factory-go v0.0.0-20181130035244-e6e8633dd3fe
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 // indirect
