@@ -1,8 +1,8 @@
 package user
 
 import (
-	"ginweibo/app/helpers"
 	userModel "ginweibo/models/user"
+	"ginweibo/pkg/helpers"
 	"ginweibo/routes/named"
 
 	"github.com/gin-gonic/gin"

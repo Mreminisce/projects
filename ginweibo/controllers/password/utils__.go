@@ -1,7 +1,7 @@
 package password
 
 import (
-	"ginweibo/app/helpers"
+	"ginweibo/pkg/helpers"
 	passwordResetModel "ginweibo/models/password_reset"
 	"ginweibo/routes/named"
 

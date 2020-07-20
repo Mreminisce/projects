@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"fmt"
-	"ginweibo/app/helpers"
+	"ginweibo/pkg/helpers"
 	"ginweibo/config"
 	"ginweibo/pkg/flash"
 	"ginweibo/routes/named"

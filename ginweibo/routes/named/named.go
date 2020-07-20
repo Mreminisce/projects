@@ -17,36 +17,6 @@ var (
 	methodMap = make(map[string]string, 0)
 )
 
-// 注册路由，动态参数目前只支持 :xx 形式
-func Name(g gin.IRouter, name string, method string, path string) {
-	s := path
-	if group, ok := g.(*gin.RouterGroup); ok {
-		s = group.BasePath() + path
-	}
-	if RouterMap[name] != "" {
-		panic("该路由已经命名过了: [" + name + "] " + s)
-	}
-	RouterMap[name] = s
-	methodMap[name] = method
-}
-
-// G: 根据 name 获取路由 path 的完整路径
-// Name(g, "root", "GET", "/")
-//     -> G("root") 得到 "/"
-// Name(g, "signup.confirm", "POST", "/signup/confirm/:token")
-//     -> G("signup.confirm", "token", "abc") 得到 "/signup/confirm/abc"
-// Name(g, "users.create", "GET", "/users/create/:id")
-//     -> G("users.create", 1) 得到 "/users/create/1"
-func G(name string, values ...interface{}) string {
-	return config.AppConfig.URL + getRoute(name, values...)
-}
-
-// 根据 name 获取路由 path (相对于网站根路径)
-func GR(name string, values ...interface{}) string {
-	return getRoute(name, values...)
-}
-
-// private
 func getRoute(name string, values ...interface{}) string {
 	path := RouterMap[name]
 	valuesArrLen := len(values)
@@ -54,8 +24,6 @@ func getRoute(name string, values ...interface{}) string {
 	if RouterMap[name] == "" {
 		return "/" + string(utils.RandomCreateBytes(10))
 	}
-	// 要么 values length 为 0，要么就为 2
-	// values length 为 1
 	if valuesArrLen != 0 && valuesArrLen != 1 && valuesArrLen != 2 {
 		return path
 	}
@@ -99,10 +67,31 @@ func getRoute(name string, values ...interface{}) string {
 	return path
 }
 
-// 打印 route
-func PrintRoutes() {
-	for k, v := range RouterMap {
-		m := methodMap[k]
-		fmt.Fprintf(os.Stderr, "[Route-Name] "+"%-7s %-25s --> %s\n", m, k, v)
+// 注册路由，动态参数目前只支持 :xx 形式
+func Name(g gin.IRouter, name string, method string, path string) {
+	s := path
+	if group, ok := g.(*gin.RouterGroup); ok {
+		s = group.BasePath() + path
 	}
+	if RouterMap[name] != "" {
+		panic("该路由已经命名过了: [" + name + "] " + s)
+	}
+	RouterMap[name] = s
+	methodMap[name] = method
+}
+
+// G: 根据 name 获取路由 path 的完整路径
+// Name(g, "root", "GET", "/")
+//     -> G("root") 得到 "/"
+// Name(g, "signup.confirm", "POST", "/signup/confirm/:token")
+//     -> G("signup.confirm", "token", "abc") 得到 "/signup/confirm/abc"
+// Name(g, "users.create", "GET", "/users/create/:id")
+//     -> G("users.create", 1) 得到 "/users/create/1"
+func G(name string, values ...interface{}) string {
+	return config.AppConfig.URL + getRoute(name, values...)
+}
+
+// 根据 name 获取路由 path (相对于网站根路径)
+func GR(name string, values ...interface{}) string {
+	return getRoute(name, values...)
 }
