@@ -1,9 +1,9 @@
 package sessions
 
 import (
-	"ginweibo/app/auth"
+	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
-	userRequest "ginweibo/app/requests/user"
+	userRequest "ginweibo/middleware/requests/user"
 	"ginweibo/pkg/flash"
 
 	"github.com/gin-gonic/gin"

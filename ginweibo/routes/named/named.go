@@ -2,10 +2,8 @@
 package named
 
 import (
-	"fmt"
 	"ginweibo/config"
 	"ginweibo/pkg/utils"
-	"os"
 	"strconv"
 	"strings"
 

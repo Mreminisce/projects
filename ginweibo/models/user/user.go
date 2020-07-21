@@ -3,7 +3,7 @@ package user
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"ginweibo/database"
+	"ginweibo/models/database"
 	"ginweibo/models"
 	"ginweibo/pkg/auth"
 	"ginweibo/pkg/utils"

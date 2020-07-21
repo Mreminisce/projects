@@ -4,11 +4,20 @@ import (
 	"ginweibo/controllers"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
-	"ginweibo/app/policies"
+	"ginweibo/middleware/policies"
 	"ginweibo/pkg/flash"
 
 	"github.com/gin-gonic/gin"
 )
+
+func backTo(c *gin.Context, currentUser *userModel.User) {
+	back := c.DefaultPostForm("back", "")
+	if back != "" {
+		controllers.Redirect(c, back, true)
+		return
+	}
+	controllers.RedirectRouter(c, "users.show", currentUser.ID)
+}
 
 // Store 创建微博
 func Store(c *gin.Context, currentUser *userModel.User) {

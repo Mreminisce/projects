@@ -4,7 +4,7 @@ import (
 	"ginweibo/controllers"
 	followerModel "ginweibo/models/follower"
 	userModel "ginweibo/models/user"
-	"ginweibo/app/policies"
+	"ginweibo/middleware/policies"
 	"ginweibo/pkg/flash"
 	"ginweibo/routes/named"
 

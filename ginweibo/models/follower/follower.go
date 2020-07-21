@@ -2,7 +2,7 @@ package follower
 
 import (
 	"fmt"
-	"ginweibo/database"
+	"ginweibo/models/database"
 	userModel "ginweibo/models/user"
 	"strconv"
 )

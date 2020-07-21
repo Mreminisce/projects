@@ -2,7 +2,7 @@ package user
 
 import (
 	userModel "ginweibo/models/user"
-	"ginweibo/app/requests"
+	"ginweibo/middleware/requests"
 
 	"ginweibo/pkg/flash"
 

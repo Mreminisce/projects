@@ -2,7 +2,7 @@ package user
 
 import (
 	userModel "ginweibo/models/user"
-	"ginweibo/app/requests"
+	"ginweibo/middleware/requests"
 )
 
 // 以后可以改为 tag 来调用验证器函数

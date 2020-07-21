@@ -1,7 +1,7 @@
 package status
 
 import (
-	"ginweibo/database"
+	"ginweibo/models/database"
 	"ginweibo/models"
 
 	"fmt"

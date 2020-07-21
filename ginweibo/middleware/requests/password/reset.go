@@ -3,7 +3,7 @@ package password
 import (
 	passwordResetModel "ginweibo/models/password_reset"
 	userModel "ginweibo/models/user"
-	"ginweibo/app/requests"
+	"ginweibo/middleware/requests"
 )
 
 type PassWordResetForm struct {

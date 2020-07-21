@@ -1,7 +1,7 @@
 package wrapper
 
 import (
-	"ginweibo/app/auth"
+	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
 	"ginweibo/pkg/flash"
 

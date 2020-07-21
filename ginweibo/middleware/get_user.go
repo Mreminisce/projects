@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"ginweibo/app/auth"
+	"ginweibo/middleware/auth"
 
 	"github.com/gin-gonic/gin"
 )

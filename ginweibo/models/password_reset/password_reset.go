@@ -1,7 +1,7 @@
 package passwordreset
 
 import (
-	"ginweibo/database"
+	"ginweibo/models/database"
 	"ginweibo/pkg/utils"
 	"time"
 

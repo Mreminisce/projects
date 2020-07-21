@@ -2,20 +2,27 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-
+	"ginweibo/pkg/helpers"
 	followerModel "ginweibo/models/follower"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
 	"ginweibo/routes/named"
 
 	"ginweibo/controllers"
-	"ginweibo/app/policies"
-	userRequest "ginweibo/app/requests/user"
-	"ginweibo/app/services"
-	viewmodels "ginweibo/app/view_models"
+	"ginweibo/middleware/policies"
+	userRequest "ginweibo/middleware/requests/user"
+	"ginweibo/middleware/services"
+	viewmodels "ginweibo/middleware/view_models"
 	"ginweibo/pkg/flash"
 	"ginweibo/pkg/pagination"
 )
+
+func sendConfirmEmail(u *userModel.User) error {
+	subject := "感谢注册 Weibo 应用！请确认你的邮箱。"
+	tpl := "mail/confirm.html"
+	confirmURL := named.G("signup.confirm", "token", u.ActivationToken)
+	return helpers.SendMail([]string{u.Email}, subject, tpl, gin.H{"confirmURL": confirmURL})
+}
 
 // Index 用户列表
 func Index(c *gin.Context, currentUser *userModel.User) {

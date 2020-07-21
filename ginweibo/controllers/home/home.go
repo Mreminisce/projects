@@ -1,9 +1,9 @@
 package staticpage
 
 import (
-	"ginweibo/app/auth"
+	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
-	viewmodels "ginweibo/app/view_models"
+	viewmodels "ginweibo/middleware/view_models"
 	followerModel "ginweibo/models/follower"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
@@ -17,7 +17,7 @@ import (
 func Home(c *gin.Context) {
 	currentUser, err := auth.GetCurrentUserFromContext(c)
 	if err != nil {
-		controllers.Render(c, "static_page/home.html", gin.H{})
+		controllers.Render(c, "home/home.html", gin.H{})
 		return
 	}
 	// 获取用户所有关注的人 (包括自己)
@@ -49,7 +49,7 @@ func Home(c *gin.Context) {
 	// 获取关注/粉丝
 	followingsLength, _ := followerModel.FollowingsCount(int(currentUser.ID))
 	followersLength, _ := followerModel.FollowersCount(int(currentUser.ID))
-	controllers.Render(c, "static_page/home.html",
+	controllers.Render(c, "home/home.html",
 		pagination.CreatePaginationFillToTplData(c, "page", currentPage, pageTotalCount, gin.H{
 			"statuses":         statusesViewModels,
 			"statusesLength":   statusesAllLength,
@@ -61,10 +61,10 @@ func Home(c *gin.Context) {
 
 // Help 帮助页
 func Help(c *gin.Context) {
-	controllers.Render(c, "static_page/help.html", gin.H{})
+	controllers.Render(c, "home/help.html", gin.H{})
 }
 
 // About 关于页
 func About(c *gin.Context) {
-	controllers.Render(c, "static_page/about.html", gin.H{})
+	controllers.Render(c, "home/about.html", gin.H{})
 }

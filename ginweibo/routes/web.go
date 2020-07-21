@@ -4,7 +4,7 @@ import (
 	"ginweibo/controllers/followers"
 	"ginweibo/controllers/password"
 	"ginweibo/controllers/sessions"
-	staticpage "ginweibo/controllers/static_page"
+	staticpage "ginweibo/controllers/home"
 	"ginweibo/controllers/status"
 	"ginweibo/controllers/user"
 	"ginweibo/middleware/wrapper"
@@ -35,50 +35,36 @@ func registerWeb(g *gin.Engine) {
 		named.Name(g, "signup.confirm", "GET", "/signup/confirm/:token")
 		userRouter := g.Group("/users")
 		{
-			// 创建用户页面
-			userRouter.GET("/create", wrapper.Guest(user.Create))
-			named.Name(userRouter, "users.create", "GET", "/create")
-			// 保存新用户
-			userRouter.POST("", wrapper.Guest(user.Store))
-			named.Name(userRouter, "users.store", "POST", "")
-			// 用户列表页面
-			userRouter.GET("", wrapper.Auth(user.Index))
-			named.Name(userRouter, "users.index", "GET", "")
-			// 展示具体用户页面
-			userRouter.GET("/show/:id", wrapper.Auth(user.Show))
-			named.Name(userRouter, "users.show", "GET", "/show/:id")
-			// 编辑用户页面
-			userRouter.GET("/edit/:id", wrapper.Auth(user.Edit))
-			named.Name(userRouter, "users.edit", "GET", "/edit/:id")
-			// 修改用户
-			userRouter.POST("/update/:id", wrapper.Auth(user.Update))
-			named.Name(userRouter, "users.update", "POST", "/update/:id")
-			// 删除用户
-			userRouter.POST("/destroy/:id", wrapper.Auth(user.Destroy))
-			named.Name(userRouter, "users.destroy", "POST", "/destroy/:id")
-			// 用户关注者列表
-			userRouter.GET("/followings/:id", wrapper.Auth(user.Followings))
-			named.Name(userRouter, "users.followings", "GET", "/followings/:id")
-			// 用户粉丝列表
-			userRouter.GET("/followers/:id", wrapper.Auth(user.Followers))
-			named.Name(userRouter, "users.followers", "GET", "/followers/:id")
-			// 关注用户
-			userRouter.POST("/followers/store/:id", wrapper.Auth(followers.Store))
-			named.Name(userRouter, "followers.store", "POST", "/followers/store/:id")
-			// 取消关注用户
-			userRouter.POST("/followers/destroy/:id", wrapper.Auth(followers.Destroy))
+			userRouter.GET("/create", wrapper.Guest(user.Create)) // 创建用户
+			named.Name(userRouter, "users.create", "GET", "/create")			
+			userRouter.POST("", wrapper.Guest(user.Store)) // 保存新用户
+			named.Name(userRouter, "users.store", "POST", "")			
+			userRouter.GET("", wrapper.Auth(user.Index)) // 用户列表
+			named.Name(userRouter, "users.index", "GET", "")			
+			userRouter.GET("/show/:id", wrapper.Auth(user.Show)) // 展示具体用户
+			named.Name(userRouter, "users.show", "GET", "/show/:id")			
+			userRouter.GET("/edit/:id", wrapper.Auth(user.Edit)) // 编辑用户
+			named.Name(userRouter, "users.edit", "GET", "/edit/:id")			
+			userRouter.POST("/update/:id", wrapper.Auth(user.Update)) // 修改用户
+			named.Name(userRouter, "users.update", "POST", "/update/:id")			
+			userRouter.POST("/destroy/:id", wrapper.Auth(user.Destroy)) // 删除用户
+			named.Name(userRouter, "users.destroy", "POST", "/destroy/:id")			
+			userRouter.GET("/followings/:id", wrapper.Auth(user.Followings)) // 用户关注列表
+			named.Name(userRouter, "users.followings", "GET", "/followings/:id")		
+			userRouter.GET("/followers/:id", wrapper.Auth(user.Followers)) // 用户粉丝列表
+			named.Name(userRouter, "users.followers", "GET", "/followers/:id")			
+			userRouter.POST("/followers/store/:id", wrapper.Auth(followers.Store)) // 关注用户
+			named.Name(userRouter, "followers.store", "POST", "/followers/store/:id")			
+			userRouter.POST("/followers/destroy/:id", wrapper.Auth(followers.Destroy)) // 取消关注用户
 			named.Name(userRouter, "followers.destroy", "POST", "/followers/destroy/:id")
 		}
 	}
 	// sessions
 	{
-		// 登录页面
 		g.GET("/login", wrapper.Guest(sessions.Create))
 		named.Name(g, "login.create", "GET", "/login")
-		// 登录
 		g.POST("/login", wrapper.Guest(sessions.Store))
 		named.Name(g, "login.store", "POST", "/login")
-		// 登出
 		g.POST("/logout", sessions.Destroy)
 		named.Name(g, "login.destroy", "POST", "/logout")
 		named.Name(g, "logout", "POST", "/logout")
@@ -102,10 +88,8 @@ func registerWeb(g *gin.Engine) {
 	// statuses
 	statusRouter := g.Group("/statuses")
 	{
-		// 处理创建微博的请求
 		statusRouter.POST("", wrapper.Auth(status.Store))
 		named.Name(statusRouter, "statuses.store", "POST", "")
-		// 处理删除微博的请求
 		statusRouter.POST("/destroy/:id", wrapper.Auth(status.Destroy))
 		named.Name(statusRouter, "statuses.destroy", "POST", "/destroy/:id")
 	}

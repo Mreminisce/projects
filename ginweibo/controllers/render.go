@@ -10,8 +10,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"ginweibo/app/auth"
-	viewmodels "ginweibo/app/view_models"
+	"ginweibo/middleware/auth"
+	viewmodels "ginweibo/middleware/view_models"
 
 	"github.com/gin-gonic/gin"
 )

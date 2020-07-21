@@ -1,7 +1,7 @@
 package user
 
 import (
-	"ginweibo/app/auth"
+	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
 	"ginweibo/models"
 	userModel "ginweibo/models/user"

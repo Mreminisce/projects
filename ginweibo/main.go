@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"ginweibo/config"
-	"ginweibo/database"
+	"ginweibo/models/database"
 	followerModel "ginweibo/models/follower"
 	passwordResetModel "ginweibo/models/password_reset"
 	statusModel "ginweibo/models/status"
@@ -47,7 +47,7 @@ func main() {
 	)
 	defer db.Close()
 	routes.Register(g)
-	fmt.Printf("\n\n----- Start to listening the incoming requests on http address: %s -----\n\n", config.AppConfig.Port)
+	fmt.Printf("\n\n----- Start on http address: %s -----\n\n", config.AppConfig.Port)
 	if err := http.ListenAndServe(config.AppConfig.Port, g); err != nil {
 		log.Fatal("http server 启动失败", err)
 	}
