@@ -2,7 +2,7 @@ package passwordreset
 
 import (
 	"ginweibo/models/database"
-	"ginweibo/pkg/utils"
+	"ginweibo/utils/rand"
 	"time"
 
 	"github.com/lexkong/log"
@@ -20,7 +20,7 @@ func (PasswordReset) TableName() string {
 }
 
 func (p *PasswordReset) Create() (err error) {
-	token := string(utils.RandomCreateBytes(30))
+	token := string(rand.RandomCreateBytes(30))
 	// 如已存在则先删除 (可以判断下，不能创建太频繁)
 	if existedPwd, err := GetByEmail(p.Email); err == nil {
 		if err = DeleteByEmail(existedPwd.Email); err != nil {

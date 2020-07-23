@@ -4,7 +4,7 @@ import (
 	userModel "ginweibo/models/user"
 	"ginweibo/middleware/requests"
 
-	"ginweibo/pkg/flash"
+	"ginweibo/middleware/flash"
 
 	"github.com/gin-gonic/gin"
 )

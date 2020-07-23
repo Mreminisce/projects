@@ -3,7 +3,7 @@ package named
 
 import (
 	"ginweibo/config"
-	"ginweibo/pkg/utils"
+	"ginweibo/utils/rand"
 	"strconv"
 	"strings"
 
@@ -20,7 +20,7 @@ func getRoute(name string, values ...interface{}) string {
 	valuesArrLen := len(values)
 	// 不存在该 name 的路由则 return 一个随机字符串，保证会访问到 404 页面
 	if RouterMap[name] == "" {
-		return "/" + string(utils.RandomCreateBytes(10))
+		return "/" + string(rand.RandomCreateBytes(10))
 	}
 	if valuesArrLen != 0 && valuesArrLen != 1 && valuesArrLen != 2 {
 		return path

@@ -18,33 +18,6 @@ type paginationRenderData struct {
 	NextPageIndex      int    // 后一页按钮的页码
 }
 
-// 生成分页模板所需的数据
-func CreatePaginationFillToTplData(c *gin.Context, pageQueryKeyName string, currentPage, totalPage int, otherData map[string]interface{}) map[string]interface{} {
-	queryValues := url.Values{}
-	for k, v := range c.Request.URL.Query() {
-		if k != pageQueryKeyName {
-			queryValues.Add(k, v[0])
-		}
-	}
-	query := queryValues.Encode()
-	if query != "" {
-		query = query + "&"
-	}
-	pageData := paginationRenderData{
-		URL:                c.Request.URL.Path + "?" + query + pageQueryKeyName + "=",
-		CurrentPage:        currentPage,
-		OnFirstPage:        currentPage == 1,
-		HasMorePages:       currentPage != totalPage,
-		Elements:           countStartAndEndPageIndex(currentPage, totalPage, 3),
-		PreviousButtonText: "前一页",
-		PreviousPageIndex:  currentPage - 1,
-		NextButtonText:     "下一页",
-		NextPageIndex:      currentPage + 1,
-	}
-	otherData["pagination"] = pageData
-	return otherData
-}
-
 // baseOnCurrentPageButtonOffset: 前后有多少个按钮；返回一个区间数组，供生成区间页码按钮
 func countStartAndEndPageIndex(currentPage, totalPage, baseOnCurrentPageButtonOffset int) []int {
 	howMuchPageButtons := baseOnCurrentPageButtonOffset*2 + 1
@@ -78,4 +51,31 @@ func countStartAndEndPageIndex(currentPage, totalPage, baseOnCurrentPageButtonOf
 		result = append(result, i)
 	}
 	return result
+}
+
+// 生成分页模板所需的数据
+func CreatePaginationFillToTplData(c *gin.Context, pageQueryKeyName string, currentPage, totalPage int, otherData map[string]interface{}) map[string]interface{} {
+	queryValues := url.Values{}
+	for k, v := range c.Request.URL.Query() {
+		if k != pageQueryKeyName {
+			queryValues.Add(k, v[0])
+		}
+	}
+	query := queryValues.Encode()
+	if query != "" {
+		query = query + "&"
+	}
+	pageData := paginationRenderData{
+		URL:                c.Request.URL.Path + "?" + query + pageQueryKeyName + "=",
+		CurrentPage:        currentPage,
+		OnFirstPage:        currentPage == 1,
+		HasMorePages:       currentPage != totalPage,
+		Elements:           countStartAndEndPageIndex(currentPage, totalPage, 3),
+		PreviousButtonText: "前一页",
+		PreviousPageIndex:  currentPage - 1,
+		NextButtonText:     "下一页",
+		NextPageIndex:      currentPage + 1,
+	}
+	otherData["pagination"] = pageData
+	return otherData
 }

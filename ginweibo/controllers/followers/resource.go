@@ -2,10 +2,10 @@ package followers
 
 import (
 	"ginweibo/controllers"
+	"ginweibo/middleware/flash"
+	"ginweibo/middleware/policies"
 	followerModel "ginweibo/models/follower"
 	userModel "ginweibo/models/user"
-	"ginweibo/middleware/policies"
-	"ginweibo/pkg/flash"
 	"ginweibo/routes/named"
 
 	"github.com/gin-gonic/gin"

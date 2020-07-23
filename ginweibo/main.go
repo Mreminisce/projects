@@ -8,7 +8,7 @@ import (
 	passwordResetModel "ginweibo/models/password_reset"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
-	"ginweibo/pkg/helpers"
+	"ginweibo/utils/view"
 	"ginweibo/routes"
 	"ginweibo/routes/named"
 	"html/template"
@@ -24,8 +24,8 @@ func setupGin(g *gin.Engine) {
 	g.Static("/"+config.AppConfig.StaticPath, config.AppConfig.StaticPath)
 	g.StaticFile("/favicon.ico", config.AppConfig.StaticPath+"/favicon.ico")
 	g.SetFuncMap(template.FuncMap{
-		"Mix":           helpers.Mix,
-		"Static":        helpers.Static,
+		"Mix":           view.Mix,
+		"Static":        view.Static,
 		"Route":         named.G, // 获取命名路由的 path
 		"RelativeRoute": named.GR,
 	})

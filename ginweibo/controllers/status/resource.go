@@ -5,7 +5,7 @@ import (
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
 	"ginweibo/middleware/policies"
-	"ginweibo/pkg/flash"
+	"ginweibo/middleware/flash"
 
 	"github.com/gin-gonic/gin"
 )

@@ -2,8 +2,8 @@ package auth
 
 import (
 	"errors"
-	userModel "ginweibo/models/user"
 	"ginweibo/config"
+	userModel "ginweibo/models/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,6 +15,14 @@ func SaveCurrentUserToContext(c *gin.Context) {
 		return
 	}
 	c.Keys[config.AppConfig.ContextCurrentUserDataKey] = user
+}
+
+// 从 session 中获取 user model 的 middleware
+func GetUser() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		SaveCurrentUserToContext(c)
+		c.Next()
+	}
 }
 
 // 从 context 中获取用户模型

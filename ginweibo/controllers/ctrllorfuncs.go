@@ -3,8 +3,8 @@ package controllers
 import (
 	"fmt"
 	"ginweibo/config"
-	"ginweibo/pkg/flash"
-	"ginweibo/pkg/helpers"
+	"ginweibo/middleware/flash"
+	"ginweibo/utils/view"
 	"ginweibo/routes/named"
 	"html/template"
 	"math"
@@ -71,7 +71,7 @@ func RenderError(c *gin.Context, code int, msg string) {
 	c.HTML(code, "error/error.html", gin.H{
 		"errorMsg":  msg,
 		"errorCode": errorCode,
-		"errorImg":  helpers.Static("/svg/" + strconv.Itoa(code) + ".svg"),
+		"errorImg":  view.Static("/svg/" + strconv.Itoa(code) + ".svg"),
 		"backUrl":   named.G("root"),
 	})
 }

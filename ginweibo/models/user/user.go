@@ -5,8 +5,8 @@ import (
 	"encoding/hex"
 	"ginweibo/models/database"
 	"ginweibo/models"
-	"ginweibo/pkg/auth"
-	"ginweibo/pkg/utils"
+	"ginweibo/utils/auth"
+	"ginweibo/utils/rand"
 	"strconv"
 	"time"
 
@@ -49,10 +49,10 @@ func (u *User) Create() (err error) {
 		return err
 	}
 	if u.RememberToken == "" {
-		u.RememberToken = string(utils.RandomCreateBytes(10))
+		u.RememberToken = string(rand.RandomCreateBytes(10))
 	}
 	if u.ActivationToken == "" {
-		u.ActivationToken = string(utils.RandomCreateBytes(30))
+		u.ActivationToken = string(rand.RandomCreateBytes(30))
 	}
 	if err = database.DB.Create(&u).Error; err != nil {
 		log.Warnf("用户创建失败: %v", err)

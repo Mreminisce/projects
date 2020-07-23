@@ -7,7 +7,7 @@ import (
 	followerModel "ginweibo/models/follower"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
-	"ginweibo/pkg/pagination"
+	"ginweibo/utils/pagination"
 	"ginweibo/routes/named"
 
 	"github.com/gin-gonic/gin"

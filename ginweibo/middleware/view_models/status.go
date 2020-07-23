@@ -2,7 +2,7 @@ package viewmodels
 
 import (
 	statusModel "ginweibo/models/status"
-	"ginweibo/pkg/time"
+	"ginweibo/utils/time"
 )
 
 // 微博

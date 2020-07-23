@@ -3,6 +3,8 @@ package mail
 import (
 	"crypto/tls"
 	"errors"
+	"ginweibo/config"
+	"ginweibo/utils/file"
 
 	"github.com/lexkong/log"
 	gomail "gopkg.in/gomail.v2"
@@ -25,14 +27,9 @@ type Mail struct {
 	Body     string   // 邮件内容
 }
 
-// Send 发送邮件
-func (m *Mail) Send() error {
-	if m.Driver == MailDriverLog {
-		return m.sendByLog()
-	} else if m.Driver == MailDriverSMTP {
-		return m.sendBySMTP()
-	}
-	return errors.New("不支持该 Mail Driver: " + m.Driver)
+func (m *Mail) sendByLog() error {
+	log.Info(m.Body)
+	return nil
 }
 
 func (m *Mail) sendBySMTP() error {
@@ -46,7 +43,32 @@ func (m *Mail) sendBySMTP() error {
 	return d.DialAndSend(msg)
 }
 
-func (m *Mail) sendByLog() error {
-	log.Info(m.Body)
-	return nil
+func (m *Mail) Send() error {
+	if m.Driver == MailDriverLog {
+		return m.sendByLog()
+	} else if m.Driver == MailDriverSMTP {
+		return m.sendBySMTP()
+	}
+	return errors.New("不支持该 Mail Driver: " + m.Driver)
+}
+
+// SendMail 发送邮件
+func SendMail(mailTo []string, subject string, templatePath string, tplData map[string]interface{}) error {
+	filePath := config.AppConfig.ViewsPath + "/" + templatePath
+	body, err := file.ReadTemplateToString(templatePath, filePath, tplData)
+	if err != nil {
+		return err
+	}
+	mail := &Mail{
+		Driver:   config.MailConfig.Driver,
+		Host:     config.MailConfig.Host,
+		Port:     config.MailConfig.Port,
+		User:     config.MailConfig.User,
+		Password: config.MailConfig.Password,
+		FromName: config.MailConfig.FromName,
+		MailTo:   mailTo,
+		Subject:  subject,
+		Body:     body,
+	}
+	return mail.Send()
 }

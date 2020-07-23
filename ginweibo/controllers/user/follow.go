@@ -2,11 +2,11 @@ package user
 
 import (
 	"ginweibo/controllers"
+	viewmodels "ginweibo/middleware/view_models"
 	followerModel "ginweibo/models/follower"
 	userModel "ginweibo/models/user"
-	viewmodels "ginweibo/middleware/view_models"
-	"ginweibo/pkg/pagination"
 	"ginweibo/routes/named"
+	"ginweibo/utils/pagination"
 
 	"github.com/gin-gonic/gin"
 )

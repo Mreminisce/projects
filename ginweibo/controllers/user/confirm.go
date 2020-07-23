@@ -5,7 +5,7 @@ import (
 	"ginweibo/controllers"
 	"ginweibo/models"
 	userModel "ginweibo/models/user"
-	"ginweibo/pkg/flash"
+	"ginweibo/middleware/flash"
 	"time"
 
 	"github.com/gin-gonic/gin"

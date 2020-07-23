@@ -2,11 +2,12 @@ package password
 
 import (
 	"ginweibo/controllers"
-	passwordResetModel "ginweibo/models/password_reset"
-	"ginweibo/pkg/helpers"
-	"ginweibo/routes/named"
+	"ginweibo/middleware/flash"
 	passwordRequest "ginweibo/middleware/requests/password"
-	"ginweibo/pkg/flash"
+	passwordResetModel "ginweibo/models/password_reset"
+	"ginweibo/utils/mail"
+	"ginweibo/routes/named"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +15,7 @@ func sendResetEmail(pwd *passwordResetModel.PasswordReset) error {
 	subject := "重置密码！请确认你的邮箱。"
 	tpl := "mail/reset_password.html"
 	resetPasswordURL := named.G("password.reset", "token", pwd.Token)
-	return helpers.SendMail([]string{pwd.Email}, subject, tpl, gin.H{"resetPasswordURL": resetPasswordURL})
+	return mail.SendMail([]string{pwd.Email}, subject, tpl, gin.H{"resetPasswordURL": resetPasswordURL})
 }
 
 // 显示重置密码的邮箱发送页面

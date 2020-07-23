@@ -1,7 +1,7 @@
 package requests
 
 import (
-	"ginweibo/pkg/utils"
+	"ginweibo/utils/view"
 	"regexp"
 	"strconv"
 	"strings"
@@ -72,7 +72,7 @@ func RunValidators(m ValidatorMap, msgMap ValidatorMsgArr) (errors []string) {
 					for ti, tv := range names {
 						data["$key"+strconv.Itoa(ti+1)+"$"] = tv
 					}
-					msg = utils.ParseEasyTemplate(msg, data)
+					msg = view.ParseEasyTemplate(msg, data)
 				}
 				errors = append(errors, msg)
 				break // 进行下一个字段的验证
@@ -109,7 +109,7 @@ func RunValidators(m ValidatorMap, msgMap ValidatorMsgArr) (errors []string) {
 // 						for ti, tv := range names {
 // 							data["$key"+strconv.Itoa(ti+1)+"$"] = tv
 // 						}
-// 						msg = utils.ParseEasyTemplate(msg, data)
+// 						msg = view.ParseEasyTemplate(msg, data)
 // 					}
 // 					errors = append(errors, msg)
 // 					break // 进行下一个字段的验证

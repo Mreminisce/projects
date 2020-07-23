@@ -2,10 +2,10 @@ package auth
 
 import (
 	"errors"
-	userModel "ginweibo/models/user"
 	"ginweibo/config"
-	"ginweibo/pkg/session"
-	"ginweibo/pkg/utils"
+	userModel "ginweibo/models/user"
+	"ginweibo/utils/rand"
+	"ginweibo/utils/session"
 	"net/url"
 	"strconv"
 
@@ -58,7 +58,7 @@ func getCurrentUserFromSession(c *gin.Context) (*userModel.User, error) {
 	return user, nil
 }
 
-// 记住我功能 utils
+// 记住我功能
 func setRememberTokenInCookie(c *gin.Context, u *userModel.User) {
 	// 记住我 (如果 登录的 PostForm 中有着 remember="on" 说明开启记住我功能)
 	rememberMe := c.PostForm(rememberFormKey) == "on"
@@ -66,7 +66,7 @@ func setRememberTokenInCookie(c *gin.Context, u *userModel.User) {
 		return
 	}
 	// 更新用户的 RememberToken
-	newToken := string(utils.RandomCreateBytes(10))
+	newToken := string(rand.RandomCreateBytes(10))
 	u.RememberToken = newToken
 	if err := u.Update(false); err != nil {
 		return

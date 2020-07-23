@@ -1,9 +1,9 @@
-package middleware
+package csrf
 
 import (
 	"ginweibo/config"
 	"ginweibo/controllers"
-	"ginweibo/pkg/utils"
+	"ginweibo/utils/rand"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +16,7 @@ func getCsrfTokenFromCookie(c *gin.Context) (token string) {
 		token = s.Value
 	}
 	if token == "" {
-		token = string(utils.RandomCreateBytes(32))
+		token = string(rand.RandomCreateBytes(32))
 		c.SetCookie(keyName, token, 0, "/", "", false, false)
 	}
 	c.Keys[keyName] = token

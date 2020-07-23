@@ -4,7 +4,7 @@ import (
 	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
 	userRequest "ginweibo/middleware/requests/user"
-	"ginweibo/pkg/flash"
+	"ginweibo/middleware/flash"
 
 	"github.com/gin-gonic/gin"
 )
