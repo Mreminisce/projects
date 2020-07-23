@@ -12,7 +12,7 @@ import (
 	"strconv"
 
 	"ginweibo/middleware/auth"
-	viewmodels "ginweibo/middleware/view_models"
+	viewmodels "ginweibo/middleware/viewmodels"
 
 	"github.com/gin-gonic/gin"
 )

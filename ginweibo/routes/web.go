@@ -2,9 +2,9 @@ package routes
 
 import (
 	"ginweibo/controllers/followers"
+	staticpage "ginweibo/controllers/home"
 	"ginweibo/controllers/password"
 	"ginweibo/controllers/sessions"
-	staticpage "ginweibo/controllers/home"
 	"ginweibo/controllers/status"
 	"ginweibo/controllers/user"
 	"ginweibo/middleware/wrapper"
@@ -36,25 +36,25 @@ func registerWeb(g *gin.Engine) {
 		userRouter := g.Group("/users")
 		{
 			userRouter.GET("/create", wrapper.Guest(user.Create)) // 创建用户
-			named.Name(userRouter, "users.create", "GET", "/create")			
+			named.Name(userRouter, "users.create", "GET", "/create")
 			userRouter.POST("", wrapper.Guest(user.Store)) // 保存新用户
-			named.Name(userRouter, "users.store", "POST", "")			
+			named.Name(userRouter, "users.store", "POST", "")
 			userRouter.GET("", wrapper.Auth(user.Index)) // 用户列表
-			named.Name(userRouter, "users.index", "GET", "")			
+			named.Name(userRouter, "users.index", "GET", "")
 			userRouter.GET("/show/:id", wrapper.Auth(user.Show)) // 展示具体用户
-			named.Name(userRouter, "users.show", "GET", "/show/:id")			
+			named.Name(userRouter, "users.show", "GET", "/show/:id")
 			userRouter.GET("/edit/:id", wrapper.Auth(user.Edit)) // 编辑用户
-			named.Name(userRouter, "users.edit", "GET", "/edit/:id")			
+			named.Name(userRouter, "users.edit", "GET", "/edit/:id")
 			userRouter.POST("/update/:id", wrapper.Auth(user.Update)) // 修改用户
-			named.Name(userRouter, "users.update", "POST", "/update/:id")			
+			named.Name(userRouter, "users.update", "POST", "/update/:id")
 			userRouter.POST("/destroy/:id", wrapper.Auth(user.Destroy)) // 删除用户
-			named.Name(userRouter, "users.destroy", "POST", "/destroy/:id")			
+			named.Name(userRouter, "users.destroy", "POST", "/destroy/:id")
 			userRouter.GET("/followings/:id", wrapper.Auth(user.Followings)) // 用户关注列表
-			named.Name(userRouter, "users.followings", "GET", "/followings/:id")		
+			named.Name(userRouter, "users.followings", "GET", "/followings/:id")
 			userRouter.GET("/followers/:id", wrapper.Auth(user.Followers)) // 用户粉丝列表
-			named.Name(userRouter, "users.followers", "GET", "/followers/:id")			
+			named.Name(userRouter, "users.followers", "GET", "/followers/:id")
 			userRouter.POST("/followers/store/:id", wrapper.Auth(followers.Store)) // 关注用户
-			named.Name(userRouter, "followers.store", "POST", "/followers/store/:id")			
+			named.Name(userRouter, "followers.store", "POST", "/followers/store/:id")
 			userRouter.POST("/followers/destroy/:id", wrapper.Auth(followers.Destroy)) // 取消关注用户
 			named.Name(userRouter, "followers.destroy", "POST", "/followers/destroy/:id")
 		}

@@ -1,8 +1,9 @@
 package wrapper
 
 import (
-	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
+	"ginweibo/middleware/auth"
+	"ginweibo/middleware/flash"
 	userModel "ginweibo/models/user"
 
 	"github.com/gin-gonic/gin"
@@ -21,5 +22,18 @@ func Auth(handler AuthHandlerFunc) gin.HandlerFunc {
 			return
 		}
 		handler(c, currentUser)
+	}
+}
+
+func Guest(handler gin.HandlerFunc) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// 用户已经登录了则跳转到 root page
+		currentUser, err := auth.GetCurrentUserFromContext(c)
+		if currentUser != nil || err == nil {
+			flash.NewInfoFlash(c, "您已登录，无需再次操作。")
+			controllers.RedirectRouter(c, "root")
+			return
+		}
+		handler(c)
 	}
 }

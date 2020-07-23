@@ -2,7 +2,7 @@ package user
 
 import (
 	"ginweibo/controllers"
-	viewmodels "ginweibo/middleware/view_models"
+	viewmodels "ginweibo/middleware/viewmodels"
 	followerModel "ginweibo/models/follower"
 	userModel "ginweibo/models/user"
 	"ginweibo/routes/named"

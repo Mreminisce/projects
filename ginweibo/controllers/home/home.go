@@ -1,14 +1,14 @@
 package staticpage
 
 import (
-	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
-	viewmodels "ginweibo/middleware/view_models"
+	"ginweibo/middleware/auth"
+	viewmodels "ginweibo/middleware/viewmodels"
 	followerModel "ginweibo/models/follower"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
-	"ginweibo/utils/pagination"
 	"ginweibo/routes/named"
+	"ginweibo/utils/pagination"
 
 	"github.com/gin-gonic/gin"
 )

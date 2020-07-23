@@ -4,8 +4,8 @@ import (
 	followerModel "ginweibo/models/follower"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
-	"ginweibo/utils/mail"
 	"ginweibo/routes/named"
+	"ginweibo/utils/mail"
 
 	"github.com/gin-gonic/gin"
 
@@ -13,8 +13,8 @@ import (
 	"ginweibo/middleware/flash"
 	"ginweibo/middleware/policies"
 	userRequest "ginweibo/middleware/requests/user"
-	"ginweibo/middleware/services"
-	viewmodels "ginweibo/middleware/view_models"
+	"ginweibo/middleware/userlist"
+	viewmodels "ginweibo/middleware/viewmodels"
 	"ginweibo/utils/pagination"
 )
 
@@ -39,7 +39,7 @@ func Index(c *gin.Context, currentUser *userModel.User) {
 		controllers.Redirect(c, named.G("users.index")+"?page=1", false)
 		return
 	}
-	users := services.UserListService(offset, limit)
+	users := userlist.UserListService(offset, limit)
 	controllers.Render(c, "user/index.html",
 		pagination.CreatePaginationFillToTplData(c, "page", currentPage, pageTotalCount, gin.H{
 			"users": users,
