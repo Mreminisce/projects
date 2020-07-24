@@ -3,9 +3,9 @@ package user
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"ginweibo/models/database"
 	"ginweibo/models"
-	"ginweibo/utils/auth"
+	"ginweibo/models/database"
+	"ginweibo/utils/bcrypt"
 	"ginweibo/utils/rand"
 	"strconv"
 	"time"
@@ -33,13 +33,13 @@ func (User) TableName() string {
 
 // Encrypt 对密码进行加密
 func (u *User) Encrypt() (err error) {
-	u.Password, err = auth.Encrypt(u.Password)
+	u.Password, err = bcrypt.Encrypt(u.Password)
 	return
 }
 
 // Compare 验证用户密码
 func (u *User) Compare(pwd string) (err error) {
-	err = auth.Compare(u.Password, pwd)
+	err = bcrypt.Compare(u.Password, pwd)
 	return
 }
 
@@ -131,7 +131,7 @@ func AllCount() (count int, err error) {
 	return
 }
 
-// Gravatar 获取用户头像
+// 获取用户头像
 func (u *User) Gravatar() string {
 	if u.Avatar != "" {
 		return u.Avatar

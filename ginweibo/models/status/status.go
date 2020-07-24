@@ -1,8 +1,8 @@
 package status
 
 import (
-	"ginweibo/models/database"
 	"ginweibo/models"
+	"ginweibo/models/database"
 
 	"fmt"
 	userModel "ginweibo/models/user"
@@ -20,7 +20,6 @@ type Status struct {
 	UserID  uint   `gorm:"column:user_id;not null" sql:"index"` // 一对多，关联 User Model
 }
 
-// TableName 表名
 func (Status) TableName() string {
 	return tableName
 }

@@ -27,19 +27,16 @@ var (
 func watchConfig() {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(ev fsnotify.Event) {
-		// 配置文件更新了
 		log.Infof("Config file changed: %s", ev.Name)
 	})
 }
 
 func InitConfig() {
-	// 初始化 viper 配置
 	viper.SetConfigFile(configFilePath)
 	viper.SetConfigType(configFileType)
 	if err := viper.ReadInConfig(); err != nil {
 		panic(fmt.Sprintf("读取配置文件失败，请检查: %v", err))
 	}
-	// 初始化日志
 	initLog()
 	AppConfig = newAppConfig()
 	DBConfig = newDBConfig()
