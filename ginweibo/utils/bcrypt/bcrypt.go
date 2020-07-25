@@ -8,7 +8,7 @@ func Encrypt(source string) (string, error) {
 	return string(hashedBytes), err
 }
 
-// 密码比对 (传入未加密的密码即可)
+// 密码比对，传入未加密的密码做参数
 func Compare(hashedPassword, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }

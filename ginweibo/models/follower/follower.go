@@ -59,6 +59,13 @@ func Followers(userID, offset, limit int) (followers []*userModel.User, err erro
 	}
 }
 
+// 粉丝数
+func FollowersCount(userID int) (count int, err error) {
+	joinSQL := fmt.Sprintf("inner join %s on users.id = followers.follower_id", tableName)
+	err = database.DB.Model(&userModel.User{}).Joins(joinSQL).Where("followers.user_id = ?", userID).Count(&count).Error
+	return
+}
+
 // 获取用户关注列表
 func Followings(userID, offset, limit int) (followers []*userModel.User, err error) {
 	followers = make([]*userModel.User, 0)
@@ -86,13 +93,6 @@ func FollowingsIDList(userID int) (followerIDList []uint) {
 func FollowingsCount(userID int) (count int, err error) {
 	joinSQL := fmt.Sprintf("inner join %s on users.id = followers.user_id", tableName)
 	err = database.DB.Model(&userModel.User{}).Joins(joinSQL).Where("followers.follower_id = ?", userID).Count(&count).Error
-	return
-}
-
-// 粉丝数
-func FollowersCount(userID int) (count int, err error) {
-	joinSQL := fmt.Sprintf("inner join %s on users.id = followers.follower_id", tableName)
-	err = database.DB.Model(&userModel.User{}).Joins(joinSQL).Where("followers.user_id = ?", userID).Count(&count).Error
 	return
 }
 

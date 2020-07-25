@@ -8,7 +8,6 @@ import (
 
 var alphaNum = []byte(`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`)
 
-// generate random []byte by specify chars
 func RandomCreateBytes(n int, alphabets ...byte) []byte {
 	if len(alphabets) == 0 {
 		alphabets = alphaNum

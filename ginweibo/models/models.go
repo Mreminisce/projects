@@ -3,15 +3,13 @@ package models
 import "time"
 
 const (
-	TrueTinyint  = 1 // TrueTinyint true
-	FalseTinyint = 0 // FalseTinyint false
+	TrueTinyint  = 1
+	FalseTinyint = 0
 )
 
 type BaseModel struct {
-	ID uint `gorm:"column:id;primary_key;AUTO_INCREMENT;not null"`
-	// MySQL 的 DATE/DATATIME 类型可以对应 Golang 的 time.Time
-	CreatedAt time.Time `gorm:"column:created_at"`
-	UpdatedAt time.Time `gorm:"column:updated_at"`
-	// 有 DeletedAt(类型需要是 *time.Time) 即支持 gorm 软删除
-	DeletedAt *time.Time `gorm:"column:deleted_at" sql:"index"`
+	ID        uint       `gorm:"column:id;primary_key;AUTO_INCREMENT;not null"`
+	CreatedAt time.Time  `gorm:"column:created_at"`
+	UpdatedAt time.Time  `gorm:"column:updated_at"`
+	DeletedAt *time.Time `gorm:"column:deleted_at" sql:"index"` // *time.Time 支持 gorm 软删除
 }

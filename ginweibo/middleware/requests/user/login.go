@@ -1,8 +1,8 @@
 package user
 
 import (
-	userModel "ginweibo/models/user"
 	"ginweibo/middleware/requests"
+	userModel "ginweibo/models/user"
 
 	"ginweibo/middleware/flash"
 
@@ -43,7 +43,6 @@ func (u *UserLoginForm) Validate() (errors []string) {
 // 验证参数并且获取用户
 func (u *UserLoginForm) ValidateAndGetUser(c *gin.Context) (user *userModel.User, errors []string) {
 	errors = u.Validate()
-
 	if len(errors) != 0 {
 		return nil, errors
 	}

@@ -27,11 +27,35 @@ func getRememberTokenFromCookie(c *gin.Context) string {
 	return ""
 }
 
+// 记住我
+func setRememberTokenInCookie(c *gin.Context, u *userModel.User) {
+	rememberMe := c.PostForm(rememberFormKey) == "on"
+	if !rememberMe {
+		return
+	}
+	// 更新用户的 RememberToken
+	newToken := string(rand.RandomCreateBytes(10))
+	u.RememberToken = newToken
+	if err := u.Update(false); err != nil {
+		return
+	}
+	c.SetCookie(rememberCookieName, u.RememberToken, rememberMaxAge, "/", "", false, true)
+}
+
 func delRememberToken(c *gin.Context) {
 	c.SetCookie(rememberCookieName, "", -1, "/", "", false, true)
 }
 
-// 从 session 中获取用户
+func Login(c *gin.Context, u *userModel.User) {
+	session.SetSession(c, config.AppConfig.AuthSessionKey, u.GetIDstring())
+	setRememberTokenInCookie(c, u)
+}
+
+func Logout(c *gin.Context) {
+	session.DeleteSession(c, config.AppConfig.AuthSessionKey)
+	delRememberToken(c)
+}
+
 func getCurrentUserFromSession(c *gin.Context) (*userModel.User, error) {
 	rememberMeToken := getRememberTokenFromCookie(c)
 	if rememberMeToken != "" {
@@ -56,33 +80,6 @@ func getCurrentUserFromSession(c *gin.Context) (*userModel.User, error) {
 	return user, nil
 }
 
-// 记住我，如果登录的 PostForm 中有着 remember="on" 说明开启记住我功能
-func setRememberTokenInCookie(c *gin.Context, u *userModel.User) {
-	rememberMe := c.PostForm(rememberFormKey) == "on"
-	if !rememberMe {
-		return
-	}
-	// 更新用户的 RememberToken
-	newToken := string(rand.RandomCreateBytes(10))
-	u.RememberToken = newToken
-	if err := u.Update(false); err != nil {
-		return
-	}
-	c.SetCookie(rememberCookieName, u.RememberToken, rememberMaxAge, "/", "", false, true)
-}
-
-// Login 登录
-func Login(c *gin.Context, u *userModel.User) {
-	session.SetSession(c, config.AppConfig.AuthSessionKey, u.GetIDstring())
-	setRememberTokenInCookie(c, u)
-}
-
-// Logout 登出
-func Logout(c *gin.Context) {
-	session.DeleteSession(c, config.AppConfig.AuthSessionKey)
-	delRememberToken(c)
-}
-
 // 保存用户数据到 context 中
 func SaveCurrentUserToContext(c *gin.Context) {
 	user, err := getCurrentUserFromSession(c)
@@ -92,7 +89,7 @@ func SaveCurrentUserToContext(c *gin.Context) {
 	c.Keys[config.AppConfig.ContextCurrentUserDataKey] = user
 }
 
-// 从 session 中获取 user model 的 middleware
+// 从 session 中获取 user
 func GetUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		SaveCurrentUserToContext(c)
@@ -100,7 +97,7 @@ func GetUser() gin.HandlerFunc {
 	}
 }
 
-// 从 context 中获取用户模型
+// 从 context 中获取用户
 func GetCurrentUserFromContext(c *gin.Context) (*userModel.User, error) {
 	err := errors.New("没有获取到用户数据")
 	userDataFromContext := c.Keys[config.AppConfig.ContextCurrentUserDataKey]
@@ -114,7 +111,7 @@ func GetCurrentUserFromContext(c *gin.Context) (*userModel.User, error) {
 	return user, nil
 }
 
-// 从 context 或者从数据库中获取用户模型
+// 从 context 或者数据库中获取用户
 func GetUserFromContextOrDataBase(c *gin.Context, id int) (*userModel.User, error) {
 	// 当前用户存在并且就是想要获取的那个用户
 	currentUser, err := GetCurrentUserFromContext(c)

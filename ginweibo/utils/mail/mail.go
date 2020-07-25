@@ -16,7 +16,7 @@ const (
 )
 
 type Mail struct {
-	Driver   string   // smtp or log (log 时邮件是写在 log 中的，便于调试)
+	Driver   string   // smtp or log
 	Host     string   // 邮箱的服务器地址
 	Port     int      // 邮箱的服务器端口
 	User     string   // 发送者的 name
@@ -52,7 +52,6 @@ func (m *Mail) Send() error {
 	return errors.New("不支持该 Mail Driver: " + m.Driver)
 }
 
-// SendMail 发送邮件
 func SendMail(mailTo []string, subject string, templatePath string, tplData map[string]interface{}) error {
 	filePath := config.AppConfig.ViewsPath + "/" + templatePath
 	body, err := file.ReadTemplateToString(templatePath, filePath, tplData)

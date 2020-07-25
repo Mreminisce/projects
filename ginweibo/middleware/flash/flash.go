@@ -56,7 +56,14 @@ func read(c *gin.Context, keyName string) *FlashData {
 	return flash
 }
 
-// Save flash
+func (fd *FlashData) Set(key string, msg string, args ...interface{}) {
+	if len(args) == 0 {
+		fd.Data[key] = msg
+	} else {
+		fd.Data[key] = fmt.Sprintf(msg, args...)
+	}
+}
+
 func (fd *FlashData) Save(c *gin.Context) {
 	fd.save(c, FlashInContextAndCookieKeyName)
 }
@@ -73,20 +80,11 @@ func NewFlash() *FlashData {
 	}
 }
 
-// 可取其他 name 的 flash store，可用于其他需要闪存的地方
+// 可取其他 name 的 flash store 用于其他需要闪存的地方
 func NewFlashByName(keyName string) *FlashData {
 	return &FlashData{
 		KeyName: keyName,
 		Data:    make(map[string]string),
-	}
-}
-
-// Set message to flash
-func (fd *FlashData) Set(key string, msg string, args ...interface{}) {
-	if len(args) == 0 {
-		fd.Data[key] = msg
-	} else {
-		fd.Data[key] = fmt.Sprintf(msg, args...)
 	}
 }
 

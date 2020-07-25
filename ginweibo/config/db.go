@@ -17,6 +17,12 @@ type dbConfig struct {
 	Debug      bool
 }
 
+func createDBURL(uname string, pwd string, host string, port int, name string) string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=%t&loc=%s",
+		uname, pwd, host, port, name, true, "Local",
+	)
+}
+
 func newDBConfig() *dbConfig {
 	viper.SetDefault("DB.CONNECTION", "mysql")
 	viper.SetDefault("DB.HOST", "127.0.0.1")
@@ -40,13 +46,4 @@ func newDBConfig() *dbConfig {
 		URL:        url,
 		Debug:      AppConfig.RunMode == RunmodeDebug,
 	}
-}
-
-func createDBURL(uname string, pwd string, host string, port int, name string) string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=%t&loc=%s",
-		uname, pwd,
-		host, port,
-		name, true,
-		"Local",
-	)
 }

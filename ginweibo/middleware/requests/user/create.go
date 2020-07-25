@@ -1,8 +1,8 @@
 package user
 
 import (
-	userModel "ginweibo/models/user"
 	"ginweibo/middleware/requests"
+	userModel "ginweibo/models/user"
 )
 
 // 以后可以改为 tag 来调用验证器函数
@@ -65,11 +65,9 @@ func (u *UserCreateForm) Validate() (errors []string) {
 // 验证参数并且创建用户
 func (u *UserCreateForm) ValidateAndSave() (user *userModel.User, errors []string) {
 	errors = u.Validate()
-
 	if len(errors) != 0 {
 		return nil, errors
 	}
-	// 创建用户
 	user = &userModel.User{
 		Name:     u.Name,
 		Email:    u.Email,

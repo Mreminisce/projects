@@ -13,8 +13,8 @@ const (
 	RunmodeRelease = "release"
 	RunmodeTest    = "test"
 	configFilePath = "./config.yaml"
-	logFilePath    = "log/ginweibo.log"
 	configFileType = "yaml"
+	logFilePath    = "log/ginweibo.log"
 )
 
 var (
@@ -22,14 +22,6 @@ var (
 	DBConfig   *dbConfig
 	MailConfig *mailConfig
 )
-
-// 监控配置文件变化
-func watchConfig() {
-	viper.WatchConfig()
-	viper.OnConfigChange(func(ev fsnotify.Event) {
-		log.Infof("Config file changed: %s", ev.Name)
-	})
-}
 
 func InitConfig() {
 	viper.SetConfigFile(configFilePath)
@@ -41,6 +33,9 @@ func InitConfig() {
 	AppConfig = newAppConfig()
 	DBConfig = newDBConfig()
 	MailConfig = newMailConfig()
-	// 热更新配置文件
-	watchConfig()
+	// 监控配置文件变化
+	viper.WatchConfig()
+	viper.OnConfigChange(func(ev fsnotify.Event) {
+		log.Infof("Config file changed: %s", ev.Name)
+	})
 }

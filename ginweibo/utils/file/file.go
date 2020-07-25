@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-// ReadFile 读取文件内容
+// 读取文件内容
 func ReadFile(filePath string) (string, error) {
 	fmt.Println(os.Getwd())
 	f, err := os.Open(filePath)
@@ -23,7 +23,7 @@ func ReadFile(filePath string) (string, error) {
 	return string(bs), nil
 }
 
-// ReadTemplateToString 读取模板并转换为 string
+// 读取模板并转换为 string
 func ReadTemplateToString(tplName string, tplPath string, tplData map[string]interface{}) (string, error) {
 	t, err := template.New(tplName).ParseFiles(tplPath)
 	if err != nil {

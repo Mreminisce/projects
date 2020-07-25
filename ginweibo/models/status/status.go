@@ -106,8 +106,7 @@ func GetUserAllStatus(userID int) ([]*Status, error) {
 // 获取该用户的微博 (分页)
 func GetUserStatus(userID, offset, limit int) ([]*Status, error) {
 	status := make([]*Status, 0)
-	err := database.DB.Where("user_id = ?", userID).Offset(
-		offset).Limit(limit).Order("id desc").Find(&status).Error
+	err := database.DB.Where("user_id = ?", userID).Offset(offset).Limit(limit).Order("id desc").Find(&status).Error
 	if err != nil {
 		return status, err
 	}

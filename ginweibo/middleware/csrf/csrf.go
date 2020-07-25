@@ -29,10 +29,8 @@ func getCsrfTokenFromParamsOrHeader(c *gin.Context) (token string) {
 	if req.Form == nil {
 		req.ParseForm()
 	}
-	// 从 params 中获取
 	token = req.FormValue(config.AppConfig.CsrfParamName)
 	if token == "" {
-		// 从 headers 中获取
 		token = req.Header.Get(config.AppConfig.CsrfHeaderName)
 	}
 	return token
@@ -42,7 +40,6 @@ func Csrf() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if config.AppConfig.EnableCsrf {
 			csrfToken := getCsrfTokenFromCookie(c)
-			// POST 并且开启了 csrf
 			if c.Request.Method == http.MethodPost {
 				paramCsrfToken := getCsrfTokenFromParamsOrHeader(c)
 				if paramCsrfToken == "" || paramCsrfToken != csrfToken {

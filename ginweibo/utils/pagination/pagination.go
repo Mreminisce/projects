@@ -25,7 +25,7 @@ func countStartAndEndPageIndex(currentPage, totalPage, baseOnCurrentPageButtonOf
 	endPage := 1
 	result := make([]int, 0)
 	if currentPage > baseOnCurrentPageButtonOffset {
-		// 当前页码大于偏移量，则起始按钮为 当前页码 - 偏移量
+		// 当前页码大于偏移量，则起始按钮为：当前页码 - 偏移量
 		startPage = currentPage - baseOnCurrentPageButtonOffset
 		if totalPage > (currentPage + baseOnCurrentPageButtonOffset) {
 			endPage = currentPage + baseOnCurrentPageButtonOffset
