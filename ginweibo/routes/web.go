@@ -35,27 +35,27 @@ func registerWeb(g *gin.Engine) {
 		named.Name(g, "signup.confirm", "GET", "/signup/confirm/:token")
 		userRouter := g.Group("/users")
 		{
-			userRouter.GET("/create", wrapper.Guest(user.Create)) // 创建用户
+			userRouter.GET("/create", wrapper.Guest(user.Create))
 			named.Name(userRouter, "users.create", "GET", "/create")
-			userRouter.POST("", wrapper.Guest(user.Store)) // 保存新用户
+			userRouter.POST("", wrapper.Guest(user.Store))
 			named.Name(userRouter, "users.store", "POST", "")
 			userRouter.GET("", wrapper.Auth(user.Index)) // 用户列表
 			named.Name(userRouter, "users.index", "GET", "")
 			userRouter.GET("/show/:id", wrapper.Auth(user.Show)) // 展示具体用户
 			named.Name(userRouter, "users.show", "GET", "/show/:id")
-			userRouter.GET("/edit/:id", wrapper.Auth(user.Edit)) // 编辑用户
+			userRouter.GET("/edit/:id", wrapper.Auth(user.Edit))
 			named.Name(userRouter, "users.edit", "GET", "/edit/:id")
-			userRouter.POST("/update/:id", wrapper.Auth(user.Update)) // 修改用户
+			userRouter.POST("/update/:id", wrapper.Auth(user.Update))
 			named.Name(userRouter, "users.update", "POST", "/update/:id")
-			userRouter.POST("/destroy/:id", wrapper.Auth(user.Destroy)) // 删除用户
+			userRouter.POST("/destroy/:id", wrapper.Auth(user.Destroy))
 			named.Name(userRouter, "users.destroy", "POST", "/destroy/:id")
-			userRouter.GET("/followings/:id", wrapper.Auth(user.Followings)) // 用户关注列表
+			userRouter.GET("/followings/:id", wrapper.Auth(user.Followings))
 			named.Name(userRouter, "users.followings", "GET", "/followings/:id")
-			userRouter.GET("/followers/:id", wrapper.Auth(user.Followers)) // 用户粉丝列表
+			userRouter.GET("/followers/:id", wrapper.Auth(user.Followers))
 			named.Name(userRouter, "users.followers", "GET", "/followers/:id")
-			userRouter.POST("/followers/store/:id", wrapper.Auth(followers.Store)) // 关注用户
+			userRouter.POST("/followers/store/:id", wrapper.Auth(followers.Store))
 			named.Name(userRouter, "followers.store", "POST", "/followers/store/:id")
-			userRouter.POST("/followers/destroy/:id", wrapper.Auth(followers.Destroy)) // 取消关注用户
+			userRouter.POST("/followers/destroy/:id", wrapper.Auth(followers.Destroy))
 			named.Name(userRouter, "followers.destroy", "POST", "/followers/destroy/:id")
 		}
 	}
@@ -72,16 +72,12 @@ func registerWeb(g *gin.Engine) {
 	// password
 	passwordRouter := g.Group("/password")
 	{
-		// 显示重置密码的邮箱发送页面
 		passwordRouter.GET("/reset", wrapper.Guest(password.ShowLinkRequestsForm))
 		named.Name(passwordRouter, "password.request", "GET", "/reset")
-		// 邮箱发送重设链接
 		passwordRouter.POST("/email", wrapper.Guest(password.SendResetLinkEmail))
 		named.Name(passwordRouter, "password.email", "POST", "/email")
-		// 密码更新页面
 		passwordRouter.GET("/reset/:token", wrapper.Guest(password.ShowResetForm))
 		named.Name(passwordRouter, "password.reset", "GET", "/reset/:token")
-		// 执行密码更新操作
 		passwordRouter.POST("/reset", wrapper.Guest(password.Reset))
 		named.Name(passwordRouter, "password.update", "POST", "/reset")
 	}

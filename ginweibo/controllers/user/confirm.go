@@ -1,17 +1,17 @@
 package user
 
 import (
-	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
+	"ginweibo/middleware/auth"
+	"ginweibo/middleware/flash"
 	"ginweibo/models"
 	userModel "ginweibo/models/user"
-	"ginweibo/middleware/flash"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
-// ConfirmEmail : 邮箱验证、用户激活
+// 邮箱验证、用户激活
 func ConfirmEmail(c *gin.Context) {
 	token := c.Param("token")
 	user, err := userModel.GetByActivationToken(token)

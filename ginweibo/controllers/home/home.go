@@ -13,14 +13,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Home 主页
 func Home(c *gin.Context) {
 	currentUser, err := auth.GetCurrentUserFromContext(c)
 	if err != nil {
 		controllers.Render(c, "home/home.html", gin.H{})
 		return
 	}
-	// 获取用户所有关注的人 (包括自己)
+	// 获取用户所有关注的人，包括自己
 	following, _ := followerModel.Followings(int(currentUser.ID), 0, 0)
 	userIDmap := make(map[uint]*userModel.User, 0)
 	userIDmap[currentUser.ID] = currentUser
@@ -59,12 +58,10 @@ func Home(c *gin.Context) {
 		}))
 }
 
-// Help 帮助页
 func Help(c *gin.Context) {
 	controllers.Render(c, "home/help.html", gin.H{})
 }
 
-// About 关于页
 func About(c *gin.Context) {
 	controllers.Render(c, "home/about.html", gin.H{})
 }

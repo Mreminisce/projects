@@ -1,22 +1,20 @@
 package sessions
 
 import (
-	"ginweibo/middleware/auth"
 	"ginweibo/controllers"
-	userRequest "ginweibo/middleware/requests/user"
+	"ginweibo/middleware/auth"
 	"ginweibo/middleware/flash"
+	userRequest "ginweibo/middleware/requests/user"
 
 	"github.com/gin-gonic/gin"
 )
 
-// Create 登录界面
 func Create(c *gin.Context) {
 	controllers.Render(c, "sessions/create.html", gin.H{
 		"back": c.Query("back"),
 	})
 }
 
-// Store 登录 (创建新会话)
 func Store(c *gin.Context) {
 	// 验证参数并且获取用户
 	userLoginForm := &userRequest.UserLoginForm{
@@ -29,7 +27,6 @@ func Store(c *gin.Context) {
 		controllers.RedirectToLoginPage(c)
 		return
 	}
-	// 用户是否激活
 	if !user.IsActivated() {
 		flash.NewWarningFlash(c, "你的账号未激活，请检查邮箱中的注册邮件进行激活。")
 		controllers.RedirectRouter(c, "root")
@@ -46,7 +43,6 @@ func Store(c *gin.Context) {
 	controllers.RedirectRouter(c, "users.show", user.ID)
 }
 
-// Destroy 登出 (销毁会话)
 func Destroy(c *gin.Context) {
 	auth.Logout(c)
 	flash.NewSuccessFlash(c, "您已成功退出！")

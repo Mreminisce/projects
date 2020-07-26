@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Store 关注用户
+// 关注用户
 func Store(c *gin.Context, currentUser *userModel.User) {
 	id, err := controllers.GetIntParam(c, "id")
 	if err != nil {
@@ -33,7 +33,7 @@ func Store(c *gin.Context, currentUser *userModel.User) {
 	controllers.Redirect(c, named.G("users.show", id)+"?page=1", false)
 }
 
-// Destroy 取消关注用户
+// 取消关注用户
 func Destroy(c *gin.Context, currentUser *userModel.User) {
 	id, err := controllers.GetIntParam(c, "id")
 	if err != nil {

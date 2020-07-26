@@ -2,10 +2,10 @@ package status
 
 import (
 	"ginweibo/controllers"
+	"ginweibo/middleware/flash"
+	"ginweibo/middleware/policies"
 	statusModel "ginweibo/models/status"
 	userModel "ginweibo/models/user"
-	"ginweibo/middleware/policies"
-	"ginweibo/middleware/flash"
 
 	"github.com/gin-gonic/gin"
 )
@@ -19,7 +19,7 @@ func backTo(c *gin.Context, currentUser *userModel.User) {
 	controllers.RedirectRouter(c, "users.show", currentUser.ID)
 }
 
-// Store 创建微博
+// 创建微博
 func Store(c *gin.Context, currentUser *userModel.User) {
 	content := c.DefaultPostForm("content", "")
 	contentLen := len(content)
@@ -46,7 +46,7 @@ func Store(c *gin.Context, currentUser *userModel.User) {
 	backTo(c, currentUser)
 }
 
-// Destroy 删除微博
+// 删除微博
 func Destroy(c *gin.Context, currentUser *userModel.User) {
 	statusID, err := controllers.GetIntParam(c, "id")
 	if err != nil {

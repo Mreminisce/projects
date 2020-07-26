@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"ginweibo/config"
 	"ginweibo/middleware/flash"
-	"ginweibo/utils/view"
 	"ginweibo/routes/named"
+	"ginweibo/utils/view"
 	"html/template"
 	"math"
 	"net/http"
@@ -33,7 +33,7 @@ func csrfField(c *gin.Context) (template.HTML, string, bool) {
 	return template.HTML(fmt.Sprintf(`<input type="hidden" name="%s" value="%s">`, config.AppConfig.CsrfParamName, tokenStr)), tokenStr, true
 }
 
-// Render : 渲染 html
+// 渲染 html
 func Render(c *gin.Context, tplPath string, data renderObj) {
 	obj := make(renderObj)
 	flashStore := flash.Read(c)
@@ -51,7 +51,7 @@ func Render(c *gin.Context, tplPath string, data renderObj) {
 			obj[csrfTokenName] = csrfToken
 		}
 	}
-	// 获取当前登录的用户 (如果用户登录了的话，中间件中会通过 session 存储用户数据)
+	// 获取当前登录的用户
 	if user, err := auth.GetCurrentUserFromContext(c); err == nil {
 		obj[config.AppConfig.ContextCurrentUserDataKey] = viewmodels.NewUserViewModelSerializer(user)
 	}
@@ -62,7 +62,7 @@ func Render(c *gin.Context, tplPath string, data renderObj) {
 	c.HTML(http.StatusOK, tplPath, obj)
 }
 
-// RenderError : 渲染错误页面
+// 渲染错误页面
 func RenderError(c *gin.Context, code int, msg string) {
 	errorCode := code
 	if code == 419 || code == 403 {
@@ -89,11 +89,11 @@ func RenderUnauthorized(c *gin.Context) {
 }
 
 func redirect(c *gin.Context, redirectPath string) {
-	// 千万注意，这个地方不能用 301(永久重定向)
+	// 注意这个地方不能用 301 永久重定向
 	c.Redirect(http.StatusFound, redirectPath)
 }
 
-// Redirect : 路由重定向 use path
+// 路由重定向 use path
 func Redirect(c *gin.Context, redirectPath string, withRoot bool) {
 	path := redirectPath
 	if withRoot {
@@ -102,12 +102,12 @@ func Redirect(c *gin.Context, redirectPath string, withRoot bool) {
 	redirect(c, path)
 }
 
-// RedirectRouter : 路由重定向 use router name
+// 路由重定向 use router name
 func RedirectRouter(c *gin.Context, routerName string, args ...interface{}) {
 	redirect(c, named.G(routerName, args...))
 }
 
-// RedirectToLoginPage : 重定向到登录页面
+// 重定向到登录页面
 func RedirectToLoginPage(c *gin.Context) {
 	loginPath := named.G("login.create")
 	if c.Request.Method == http.MethodPost {
@@ -117,8 +117,7 @@ func RedirectToLoginPage(c *gin.Context) {
 	redirect(c, loginPath+"?back="+c.Request.URL.Path)
 }
 
-// GetIntParam : 从 path params 中获取 int 参数
-// http://a.com/xx/1 => 获取到 int 1
+// 从 path params 中获取 int 参数：http://a.com/xx/1 => 获取到 int 1
 func GetIntParam(c *gin.Context, key string) (int, error) {
 	i, err := strconv.Atoi(c.Param(key))
 	if err != nil {
@@ -127,8 +126,7 @@ func GetIntParam(c *gin.Context, key string) (int, error) {
 	return i, nil
 }
 
-// GetPageQuery 从 query 中获取有关分页的参数
-// xx.com?page=1&pageline=10
+// GetPageQuery 从 query 中获取有关分页的参数：// xx.com?page=1&pageline=10
 func GetPageQuery(c *gin.Context, defaultPageLine, totalCount int) (offset, limit, currentPage, pageTotalCount int) {
 	page, err := strconv.Atoi(c.Query("page"))
 	if err != nil {

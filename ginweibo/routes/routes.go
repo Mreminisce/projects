@@ -26,8 +26,8 @@ func Register(g *gin.Engine) *gin.Engine {
 		MaxAge:   86400 * 30,
 	})
 	g.Use(ginSessions.Middleware(sessionStoreName, store))
-	g.Use(csrf.Csrf())      // csrf
-	g.Use(flash.OldValue()) // 记忆上次表单提交的内容，消费即消失
+	g.Use(csrf.Csrf())
+	g.Use(flash.OldValue()) // 记忆上次表单提交的内容
 	g.Use(auth.GetUser())   // 从 session 中获取用户
 	g.NoRoute(func(c *gin.Context) {
 		controllers.Render404(c)

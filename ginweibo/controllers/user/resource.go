@@ -25,7 +25,7 @@ func sendConfirmEmail(u *userModel.User) error {
 	return mail.SendMail([]string{u.Email}, subject, tpl, gin.H{"confirmURL": confirmURL})
 }
 
-// Index 用户列表
+// 用户列表
 func Index(c *gin.Context, currentUser *userModel.User) {
 	defaultPageLine := 10
 	allUserCount, err := userModel.AllCount()
@@ -46,12 +46,12 @@ func Index(c *gin.Context, currentUser *userModel.User) {
 		}))
 }
 
-// Create 创建用户页面
+// 创建用户页面
 func Create(c *gin.Context) {
 	controllers.Render(c, "user/create.html", gin.H{})
 }
 
-// Show 用户详情
+// 用户详情
 func Show(c *gin.Context, currentUser *userModel.User) {
 	id, err := controllers.GetIntParam(c, "id")
 	if err != nil {
@@ -98,7 +98,7 @@ func Show(c *gin.Context, currentUser *userModel.User) {
 		}))
 }
 
-// Store 保存用户
+// 保存用户
 func Store(c *gin.Context) {
 	// 验证参数和创建用户
 	userCreateForm := &userRequest.UserCreateForm{
@@ -121,7 +121,7 @@ func Store(c *gin.Context) {
 	controllers.RedirectRouter(c, "root")
 }
 
-// Edit 编辑用户页面
+// 编辑用户页面
 func Edit(c *gin.Context, currentUser *userModel.User) {
 	id, err := controllers.GetIntParam(c, "id")
 	if err != nil {
@@ -137,7 +137,7 @@ func Edit(c *gin.Context, currentUser *userModel.User) {
 	})
 }
 
-// Update 编辑用户
+// 编辑用户
 func Update(c *gin.Context, currentUser *userModel.User) {
 	id, err := controllers.GetIntParam(c, "id")
 	if err != nil {
@@ -164,7 +164,7 @@ func Update(c *gin.Context, currentUser *userModel.User) {
 	controllers.RedirectRouter(c, "users.show", currentUser.ID)
 }
 
-// Destroy 删除用户
+// 删除用户
 func Destroy(c *gin.Context, currentUser *userModel.User) {
 	page := c.DefaultQuery("page", "1")
 	id, err := controllers.GetIntParam(c, "id")

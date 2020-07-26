@@ -5,8 +5,8 @@ import (
 	"ginweibo/middleware/flash"
 	passwordRequest "ginweibo/middleware/requests/password"
 	passwordResetModel "ginweibo/models/password_reset"
-	"ginweibo/utils/mail"
 	"ginweibo/routes/named"
+	"ginweibo/utils/mail"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,7 +23,7 @@ func ShowLinkRequestsForm(c *gin.Context) {
 	controllers.Render(c, "password/email.html", gin.H{})
 }
 
-// 邮箱发送重设链接
+// 发送重设密码邮件
 func SendResetLinkEmail(c *gin.Context) {
 	email := c.PostForm("email")
 	passwordForm := &passwordRequest.PasswordEmailForm{
@@ -45,7 +45,7 @@ func SendResetLinkEmail(c *gin.Context) {
 	controllers.RedirectRouter(c, "password.request")
 }
 
-// ShowResetForm 密码更新页面
+// 更新密码页面
 func ShowResetForm(c *gin.Context) {
 	token := c.Param("token")
 	p, err := passwordResetModel.GetByToken(token)
@@ -59,7 +59,7 @@ func ShowResetForm(c *gin.Context) {
 	})
 }
 
-// Reset 执行密码更新操作
+// 更新密码
 func Reset(c *gin.Context) {
 	passwordForm := &passwordRequest.PassWordResetForm{
 		Token:                c.PostForm("token"),
