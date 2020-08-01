@@ -1,0 +1,13 @@
+page_size: 5
+
+addr: :9000
+
+session_secret: wcgblog
+
+signup_enabled: true
+
+public: static
+
+dsn: root:123456@tcp(127.0.0.1:3306)/wcgblog?charset=utf8&parseTime=True&loc=Local
+
+domain:
