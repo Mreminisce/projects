@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/static/img/favicon.ico">
+    <title>Monte的网络日志</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/jumbotron.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Monte的网络日志</a>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">&nbsp;&nbsp;首页&nbsp;&nbsp;</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com/" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;文章&nbsp;&nbsp;</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">    
+            {{range $k,$v:=.articleClassList}}
+              <a class="dropdown-item" href="/article/list/{{$v.ArticleclassId}}">{{$v.Name}}</a>
+            {{end}}            
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">&nbsp;&nbsp;关于我&nbsp;&nbsp;</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="关键字···" aria-label="Search" id="SearchString">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="SearchAdd();">搜索</button>
+        </form>
+      </div>
+    </nav>
+    <div id="mark_mask" style="display:none;position:fixed;top:40px;left:0;z-index:99999999;height:1000px;width:100%;background:rgba(0,0,0,0.4);"></div>
+    <script>
+    function SearchAdd(){
+      var keyword = $("#SearchString").val();
+      if(keyword == ""){
+        alert("关键字不能为空");
+        return
+      }
+      window.location.href = "/article/search/"+keyword+"/1"
+    }
+    </script>

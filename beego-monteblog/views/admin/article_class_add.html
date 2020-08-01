@@ -1,0 +1,36 @@
+{{template "admin/header.html" .}}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <h2>分类添加</h2>
+          <hr>
+          <div class="btn-toolbar mb-2 mb-md-0">          
+            <form onsubmit="return false;">
+              <div class="form-group">
+                <label for="exampleInputText">分类名称</label>
+                <input type="text" value="{{.articleClass.Name}}" class="form-control" id="exampleInputText" aria-describedby="textHelp" placeholder="请输入">
+                <small id="textHelp" class="form-text text-muted">请输入文章分类名称</small>
+              </div>
+              <input type="hidden" value="{{.articleClass.ArticleclassId}}" id="articleClassId">             
+              <input type="hidden" name="_xsrf" value="{{.custom_xsrf}}" id="custom_xsrf">
+              <button type="button" class="btn btn-primary" onclick="startUpdate();">提交</button>
+            </form>
+          </div>
+        </main>     
+        <script>
+          function startUpdate(){             
+              var name = $("#exampleInputText").val();             
+              var articleClassId = $("#articleClassId").val();
+              var custom_xsrf = $("#custom_xsrf").val();             
+              $.post("/admin/article-update",{
+               name:name,
+               articleClassId:articleClassId,
+                _xsrf:custom_xsrf,
+              },function(response){
+                if(response.Code == 1){
+                  alert(response.Msg);
+                }else{
+                  alert(response.Msg);
+                }
+              });
+          }
+        </script>
+{{template "admin/footer.html" .}}

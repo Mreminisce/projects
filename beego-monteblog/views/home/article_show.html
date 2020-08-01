@@ -1,0 +1,26 @@
+{{template "home/header.html" .}}
+<style>
+  .lead img{
+      width: 100%;
+  }
+</style>
+<main role="main" class="container" style="padding:2rem 0rem;">
+    <div class="row">
+      <div class="col-sm-9">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="/">首页</a>
+          <a class="breadcrumb-item" href="/article/list/{{.articleClass.ArticleclassId}}">{{.articleClass.Name}}</a>
+          <span class="breadcrumb-item active">{{.article.Title}}</span>
+        </nav>
+        <h2 class="mt-5 text-center">{{.article.Title}}</h2>
+          <p class="text-center"><em>发表于：{{.article.Time}}.format  作者：Username</em></p>
+        <div class="lead">
+            {{str2html .article.Content}}
+        </div>
+      </div>
+      <div class="col-sm-3">
+          {{template "home/article_class.html" .}}
+      </div>
+    </div>
+</main>
+{{template "home/footer.html" .}}

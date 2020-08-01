@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/img/favicon.ico">
+    <title>Monte的网络日志</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/floating-labels.css" rel="stylesheet">
+  </head>
+  <body>
+    <form class="form-signin" action="" method="post" enctype="multipart/form-data">
+      <div class="text-center mb-4">     
+        <h1 class="h3 mb-3 font-weight-normal">管理员登录</h1>
+        <p>
+          <code>简单是稳定的前提。</code> 
+        </p>
+      </div>
+      <div class="form-label-group">
+        <input type="text" id="inputUsername" class="form-control" placeholder="请输入帐号" name="username" required autofocus>
+        <label for="inputUsername">请输入帐号</label>
+      </div>
+      <div class="form-label-group">
+        <input type="password" id="inputPassword" class="form-control" placeholder="请输入密码" name="password" required>
+        <label for="inputPassword">请输入密码</label>
+      </div>
+      <div class="checkbox mb-3">
+        <label>
+          <!-- <input type="checkbox" value="remember-me"> Remember me-->
+        </label>
+      </div>
+      {{.xsrfdata}}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      <p class="mt-5 mb-3 text-muted text-center">&copy; 2019-2020</p>
+    </form>
+  </body>
+</html>

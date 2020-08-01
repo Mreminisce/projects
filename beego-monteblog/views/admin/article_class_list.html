@@ -1,0 +1,36 @@
+{{template "admin/header.html" .}}
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <h2>分类管理</h2>
+          <hr>
+          <p><a href="/admin/article-add">
+              <button type="button" class="btn btn-primary">新增+</button>
+          </a></p>
+          <div class="table-responsive">           
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">分类名称</th>
+                  <th scope="col">操作</th>
+                </tr>
+              </thead>
+              <tbody>        
+                {{range $k, $v := .articleClassList}}
+                <tr>
+                  <th scope="row">{{$v.ArticleclassId}}</th>
+                  <td>{{$v.Name}}</td>
+                  <td>
+                  <a href="/admin/article-add/{{$v.ArticleclassId}}">
+                    <button type="button" class="btn btn-success btn-sm">编辑</button>
+                  </a>
+                  <a href="/admin/article-del/{{$v.ArticleclassId}}">
+                    <button type="button" class="btn btn-danger btn-sm">删除</button>
+                  </a>
+                  </td>
+                </tr>
+                {{end}}               
+              </tbody>
+            </table>
+          </div>
+        </main>
+{{template "admin/footer.html" .}}

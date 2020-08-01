@@ -1,0 +1,24 @@
+{{template "home/header.html" .}}
+  <main role="main">
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="display-4">PHP => Go</h1>
+        <p>我们真正想要的是能够发挥作用的东西，结果技术应运而生。——道格拉斯·亚当斯（Douglas Adams）</p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card-columns">
+        {{range $k,$v := .articleList}}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{$v.Title}}</h5>
+              <p><em>发表于：{{$v.Time}}.format  作者：Username</em></p>
+              <p class="card-text">{{substr $v.Content 0 100 | html2str}}</p>
+              <p><a class="btn btn-secondary" href="/article/show/{{$v.ArticleId}}" role="button">详情 »</a></p>
+            </div>
+          </div>
+        {{end}}   
+      </div>
+    </div>
+  </main>
+{{template "home/footer.html" .}}

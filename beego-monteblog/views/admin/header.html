@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/static/img/favicon.ico">
+    <title>博客控制台</title>
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+    <style>
+      /* 解决 CSS 造成的页面抖动问题 */
+      html, body {height:100%;overflow:auto;margin: 0;}
+      html{overflow-y:scroll;}
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">博客控制台</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/" target="_blank">主页</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin/signout">退出登录</a> 
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <span data-feather="home"></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/index">
+                  <span data-feather="bar-chart-2"></span>系统信息
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/article-list">
+                  <span data-feather="users"></span>分类管理
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/articlelist">
+                  <span data-feather="file"></span>文章管理
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>

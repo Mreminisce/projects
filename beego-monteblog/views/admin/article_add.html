@@ -1,0 +1,79 @@
+{{template "admin/header.html" .}}
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <h2>文章添加</h2><hr>
+    <div class="mb-2 mb-md-0"> 
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label for="exampleInputTitle">文章标题</label>
+          <input type="text" value="{{.article.Title}}" class="form-control" id="exampleInputTitle" aria-describedby="textHelp" placeholder="请输入">
+          <small id="textHelp" class="form-text text-muted">请输入文章标题</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputText">所属分类</label>
+          <select class="custom-select d-block w-100" id="articleClassId" required="">
+            <option value="">选择分类...</option>
+            {{range $k,$v := .articleClassList}}
+            <option value="{{$v.ArticleclassId}}" {{if eq $v.ArticleclassType 1}}selected = "selected"{{end}}>
+              {{$v.Name}}
+            </option>
+            {{end}}
+          </select>
+          <small id="textHelp" class="form-text text-muted">请选择文章类型</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputText">文章内容</label>
+          <textarea id="editor_id" name="content" style="width:100%;height:350px;">
+            {{.article.Content}}
+          </textarea>
+          <small id="textHelp" class="form-text text-muted">请输入文章内容</small>
+        </div>
+        <input type="hidden" value="{{.article.ArticleId}}" id="articleId">            
+        <input type="hidden" name="_xsrf" value="{{.custom_xsrf}}" id="custom_xsrf">
+        <button type="button" class="btn btn-primary" onclick="startUpdate();">提交</button>
+      </form>
+    </div>
+  </main> 
+  <script>
+    function startUpdate(){ 
+        var title = $("#exampleInputTitle").val();
+        var article_class_id = $("#articleClassId option:selected").val();
+        var content = $("#editor_id").val()
+        var article_id = $("#articleId").val();
+        var custom_xsrf = $("#custom_xsrf").val();
+        $.post("/admin/articleupdate",{
+          title:title,
+          article_class_id:article_class_id,
+          content:content,
+          article_id:article_id,
+          _xsrf:custom_xsrf,
+        },function(response){
+          if(response.Code == 1){
+            alert(response.Msg);
+          }else{
+            alert(response.Msg);
+          }
+        });
+    }
+  </script>
+  <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all.js"></script>
+  <script charset="utf-8" src="/static/js/kindeditor/lang/zh-CN.js"></script>
+  <script>
+      var editor;
+      KindEditor.ready(function(K) {
+        editor = K.create('#editor_id',{
+          uploadJson : '/go/upload_json',
+          //fileManagerJson : '',
+          allowFileManager : true,
+          extraFileUploadParams : {
+              _xsrf:{{.custom_xsrf}},
+          },
+          afterBlur: function () { this.sync(); },
+          items:[
+  'source', '|', 'undo', 'redo', '|', 'justifyleft', 'justifycenter', 'justifyright',
+  'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', '|',
+  'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+  'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'emoticons'],
+        });
+      });
+  </script>
+{{template "admin/footer.html" .}}

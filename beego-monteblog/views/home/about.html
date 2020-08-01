@@ -1,0 +1,19 @@
+{{template "home/header.html" .}}
+<main role="main" class="container" style="padding:2rem 0rem;">
+    <div class="row">
+      <div class="col-sm-9">     
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="/">首页</a>
+          <span class="breadcrumb-item active">关于我</span>
+        </nav>
+        <h2 class="mt-5 text-center">关于我</h2>
+        <div class="lead">           
+            <center><img src="/static/img/me.jpg" alt="..." class="img-thumbnail" style="width:50%;"></center>
+        </div>  
+      </div>
+      <div class="col-sm-3">
+          {{template "home/article_class.html" .}}
+      </div>
+    </div>
+</main>
+{{template "home/footer.html" .}}

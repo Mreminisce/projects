@@ -1,0 +1,43 @@
+{{template "home/header.html" .}}
+<main role="main" class="container" style="padding:2rem 0rem;">
+    <div class="row">
+      <div class="col-sm-9">
+        <nav class="breadcrumb">
+          <a class="breadcrumb-item" href="/">首页</a>
+          <span class="breadcrumb-item active">关键字 “{{.keyword}}” </span>
+        </nav>
+        <div class="alert alert-success" role="alert">
+          为您找到相关结果约{{.articleCount}}个，用时：{{.totaltime}}秒
+        </div>
+        {{range $k,$v := .articleList}}
+        <div class="row">
+          <div class="col-md-12">
+            <h3><a href="/article/show/{{$v.ArticleId}}">{{$v.Title}}</a></h3>
+            <p><em>发表于：{{$v.Time}}.format  作者：Username</em></p>
+            <p>{{substr $v.Content 0 100 | html2str}}</p>
+            <p><a class="btn btn-secondary" href="/article/show/{{$v.ArticleId}}" role="button">详情 »</a></p>
+          </div>
+        </div>
+        <hr>
+        {{end}}
+        <div class="row">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-outline-secondary btn-sm">
+              <a href="/article/search/{{.keyword}}/1">
+                首页
+              </a>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm">上一页</button>
+            <span class="">当前第{{.page}}页</span>
+            <span class="">&nbsp;共 ? 页</span>
+            <button type="button" class="btn btn-outline-secondary btn-sm">下一页</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm">尾页</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+          {{template "home/article_class.html" .}}
+      </div>
+    </div>
+</main>
+{{template "home/footer.html" .}}
