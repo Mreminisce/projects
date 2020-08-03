@@ -61,7 +61,7 @@ func GetTag(c *gin.Context) {
 	}
 	polict = bluemonday.StrictPolicy()
 	for _, post := range posts {
-		post.Tags, _ = service.ListTagPostById(strconv.FormatUint(uint64(post.ID), 10))
+		post.Tags, _ = service.ListTagByPostId(strconv.FormatUint(uint64(post.ID), 10))
 		post.Body = polict.Sanitize(string(blackfriday.Run([]byte(post.Body))))
 	}
 	c.HTML(http.StatusOK, "index/index.html", gin.H{

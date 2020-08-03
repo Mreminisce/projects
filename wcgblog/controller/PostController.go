@@ -82,7 +82,7 @@ func PostEdit(c *gin.Context) {
 		Handle404(c)
 		return
 	}
-	post.Tags, _ = service.ListTagPostById(id)
+	post.Tags, _ = service.ListTagByPostId(id)
 	c.HTML(http.StatusOK, "post/modify.html", gin.H{
 		"post": post,
 	})
@@ -209,7 +209,7 @@ func GetPost(c *gin.Context) {
 		res["message"] = err.Error()
 		return
 	}
-	post.Tags, _ = service.ListTagPostById(id)
+	post.Tags, _ = service.ListTagByPostId(id)
 	post.Comments, err = service.ListCommentByPostID(id)
 	if err != nil {
 		res["message"] = err.Error()

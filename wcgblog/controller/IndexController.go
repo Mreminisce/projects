@@ -44,7 +44,7 @@ func IndexGet(c *gin.Context) {
 	}
 	policy = bluemonday.StrictPolicy()
 	for _, post := range posts {
-		post.Tags, _ = service.ListTagPostById(strconv.FormatUint(uint64(post.ID), 10))
+		post.Tags, _ = service.ListTagByPostId(strconv.FormatUint(uint64(post.ID), 10))
 		post.Body = policy.Sanitize(string(blackfriday.Run([]byte(post.Body))))
 	}
 	user, _ := c.Get(CONTEXT_USER_KEY)

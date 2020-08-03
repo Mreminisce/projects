@@ -33,25 +33,6 @@ func CountTag() int {
 	return count
 }
 
-func ListTagPostById(id string) ([]*model.Tag, error) {
-	var tags []*model.Tag
-	postId, _ := strconv.ParseUint(id, 10, 64)
-	if err != nil {
-		return nil, err
-	}
-	rows, err := db.Raw("select t.* from tags t inner join post_tags pt on t.id = pt.tag_id  where pt.post_id = ?", uint(postId)).Rows()
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var tag model.Tag
-		db.ScanRows(rows, &tag)
-		tags = append(tags, &tag)
-	}
-	return tags, nil
-}
-
 // 新增标签博客中间表
 func TagPostInsert(tag *model.PostTag) error {
 	err := db.Create(tag).Error
