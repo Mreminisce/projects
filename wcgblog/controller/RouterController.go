@@ -20,42 +20,42 @@ import (
 
 // 绑定所有的url
 func MapRoutes() *gin.Engine {
-	router := gin.Default()
+	g := gin.Default()
 	// 配置文件解析
-	setTemplate(router)
+	setTemplate(g)
 	// session 初始化
-	setSessions(router)
+	setSessions(g)
 	// 填充常用信息
-	router.Use(SharedData())
+	g.Use(SharedData())
 	// 定时任务，每天获取一次网页数据地图
 	gocron.Every(1).Day().Do(CreateXMLSitemap)
 	gocron.Start()
-	router.Static("/static", filepath.Join(getCurrentDirectory(), "./static"))
-	router.NoRoute(Handle404)
+	g.Static("/static", filepath.Join(getCurrentDirectory(), "./static"))
+	g.NoRoute(Handle404)
 	// 首页
-	router.GET("/", IndexGet)
-	router.GET("/index", IndexGet)
+	g.GET("/", IndexGet)
+	g.GET("/index", IndexGet)
 	// 用户相关接口
 	if system.GetConfiguration().SignupEnabled {
-		router.GET("/signup", SignupGet)
-		router.POST("/signup", SignupPost)
+		g.GET("/signup", SignupGet)
+		g.POST("/signup", SignupPost)
 	}
-	router.GET("/signin", SigninGet)
-	router.POST("/signin", SigninPost)
-	router.GET("/logout", LogoutGet)
+	g.GET("/signin", SigninGet)
+	g.POST("/signin", SigninPost)
+	g.GET("/logout", LogoutGet)
 	// 认证
-	router.GET("/auth/:authType", AuthGet)
+	g.GET("/auth/:authType", AuthGet)
 	// 验证码
-	router.GET("/captcha", CaptchaGet)
+	g.GET("/captcha", CaptchaGet)
 	// 获取博客详情
-	router.GET("/post/:id", GetPost)
+	g.GET("/post/:id", GetPost)
 	// 获取页面详情
-	router.GET("/page/:id", PageGet)
+	g.GET("/page/:id", PageGet)
 	// 获取标签
-	router.GET("/tag/:tag", GetTag)
+	g.GET("/tag/:tag", GetTag)
 	// 获取链接
-	router.GET("/link/:id", LinkGet)
-	visitor := router.Group("/visitor")
+	g.GET("/link/:id", LinkGet)
+	visitor := g.Group("/visitor")
 	visitor.Use(AuthRequired())
 	{
 		// 新增评论
@@ -63,47 +63,47 @@ func MapRoutes() *gin.Engine {
 		//删除评论
 		visitor.POST("/comment/:id/delete", CommentDelete)
 	}
-	authorized := router.Group("/admin")
-	authorized.Use(AdminScopeRequired())
+	admin := g.Group("/admin")
+	admin.Use(AdminScopeRequired())
 	{
 		// 首页
-		authorized.GET("/index", AdminIndex)
+		admin.GET("/index", AdminIndex)
 		//	 用户首页
-		authorized.GET("/user", UserIndex)
-		authorized.GET("/user/:id/lock", UserLock)
+		admin.GET("/user", UserIndex)
+		admin.GET("/user/:id/lock", UserLock)
 		//	 编写博客与修改删除博客
-		authorized.GET("/post", PostIndex)
-		authorized.GET("/new_post", PostNew)
-		authorized.POST("/new_post", PostCreate)
-		authorized.GET("/post/:id/edit", PostEdit)
-		authorized.POST("/post/:id/edit", UpdatePost)
-		authorized.POST("/post/:id/publish", PublishPost)
-		authorized.POST("/post/:id/delete", DeletePost)
+		admin.GET("/post", PostIndex)
+		admin.GET("/new_post", PostNew)
+		admin.POST("/new_post", PostCreate)
+		admin.GET("/post/:id/edit", PostEdit)
+		admin.POST("/post/:id/edit", UpdatePost)
+		admin.POST("/post/:id/publish", PublishPost)
+		admin.POST("/post/:id/delete", DeletePost)
 		//	 页面管理
-		authorized.GET("/page", PageIndex)
-		authorized.GET("/new_page", PageNew)
-		authorized.POST("/new_page", PageCreate)
-		authorized.GET("/page/:id/edit", PageEdit)
-		authorized.POST("/page/:id/edit", UpdatePage)
-		authorized.POST("/page/:id/publish", PagePublish)
-		authorized.POST("/page/:id/delete", DeletePage)
+		admin.GET("/page", PageIndex)
+		admin.GET("/new_page", PageNew)
+		admin.POST("/new_page", PageCreate)
+		admin.GET("/page/:id/edit", PageEdit)
+		admin.POST("/page/:id/edit", UpdatePage)
+		admin.POST("/page/:id/publish", PagePublish)
+		admin.POST("/page/:id/delete", DeletePage)
 		//	读取评论
-		authorized.POST("/comment/:id", CommentRead)
-		authorized.POST("/read_all", CommentReadAll)
+		admin.POST("/comment/:id", CommentRead)
+		admin.POST("/read_all", CommentReadAll)
 		// 标签
-		authorized.POST("/new_tag", TagCreate)
+		admin.POST("/new_tag", TagCreate)
 		//	 链接
-		authorized.GET("/link", LinkIndex)
-		authorized.POST("/new_link", LinkCreate)
-		authorized.POST("/link/:id/edit", LinkUpdate)
-		authorized.POST("/link/:id/delete", LinkDelete)
+		admin.GET("/link", LinkIndex)
+		admin.POST("/new_link", LinkCreate)
+		admin.POST("/link/:id/edit", LinkUpdate)
+		admin.POST("/link/:id/delete", LinkDelete)
 		//	 用户信息
-		authorized.GET("/profile", ProfileGet)
-		authorized.POST("/profile", ProfileUpdate)
-		authorized.POST("/profile/email/bind", BindEmail)
-		authorized.POST("/profile/email/unbind", UnbinEmail)
+		admin.GET("/profile", ProfileGet)
+		admin.POST("/profile", ProfileUpdate)
+		admin.POST("/profile/email/bind", BindEmail)
+		admin.POST("/profile/email/unbind", UnbinEmail)
 	}
-	return router
+	return g
 }
 
 // 获取当前目录
@@ -139,12 +139,12 @@ func setTemplate(engine *gin.Engine) {
 }
 
 // session初始化
-func setSessions(router *gin.Engine) {
+func setSessions(g *gin.Engine) {
 	config := system.GetConfiguration()
 	store := cookie.NewStore([]byte(config.SessionSecret))
 	//	 MaxAge 时间
 	store.Options(sessions.Options{HttpOnly: true, MaxAge: 7 * 86400, Path: "/"})
-	router.Use(sessions.Sessions("gin-session", store))
+	g.Use(sessions.Sessions("gin-session", store))
 }
 
 // 填充常用信息 如用户信息
@@ -172,7 +172,7 @@ func AuthRequired() gin.HandlerFunc {
 				return
 			}
 		}
-		seelog.Warnf("User not authorized to visit %s", c.Request.RequestURI)
+		seelog.Warnf("User not admin to visit %s", c.Request.RequestURI)
 		c.HTML(http.StatusForbidden, "errors/error.html", gin.H{
 			"message": "Forbidden !",
 		})
@@ -189,7 +189,7 @@ func AdminScopeRequired() gin.HandlerFunc {
 				return
 			}
 		}
-		seelog.Warnf("User not authorized to visit %s", c.Request.RequestURI)
+		seelog.Warnf("User not admin to visit %s", c.Request.RequestURI)
 		c.HTML(http.StatusForbidden, "errors/error.html", gin.H{
 			"message": "Forbidden !",
 		})
